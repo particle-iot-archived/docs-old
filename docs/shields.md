@@ -5,7 +5,7 @@ This shield is essentially an adapter that allows the user to connect Arduino co
 Operation
 -----
 
-![Shield Shield](images/sshield-top.jpg)
+![Shield Shield](../images/sshield-top.jpg)
 
 We use Texas Instruments [TXB0108PWR](http://www.ti.com/lit/ds/symlink/txb0108.pdf) to do the voltage translation in between Spark Core's 3.3V logic level and Arduino's 5V logic.
 
