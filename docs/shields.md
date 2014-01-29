@@ -5,7 +5,7 @@ This shield is essentially an adapter that allows the user to connect Arduino co
 Operation
 -----
 
-![Shield Shield](images/sshield-top.jpg)
+![Shield Shield](../images/sshield-top.jpg)
 
 We use Texas Instruments [TXB0108PWR](http://www.ti.com/lit/ds/symlink/txb0108.pdf) to do the voltage translation in between Spark Core's 3.3V logic level and Arduino's 5V logic.
 
@@ -16,7 +16,7 @@ The shield has an onboard voltage regulator and can be powered from 7V to 15V DC
 Specifications
 -----
 
-![Shield Shield Setup](images/sshield-setup.jpg)
+![Shield Shield Setup](../images/sshield-setup.jpg)
 
 - Operating voltage: 7 to 15V DC
 - Current consumption: without the core plugged in 7mA at 9V DC and 150mA with the Core. 
@@ -128,14 +128,14 @@ Pin mapping
 Relay Shield
 ====
 
-![Relay Shield Top](images/relay-shield-top.jpg)
+![Relay Shield Top](../images/relay-shield-top.jpg)
 
 The Relay Shield, in combination with the Spark Core, allows you to control high power devices over the internet. Want to control a lamp, fan or garden sprinklers? Then this is a solution for you! 
 
 Operation
 -----
 
-![Relay Shield Setup](images/relay-shield-setup.jpg)
+![Relay Shield Setup](../images/relay-shield-setup.jpg)
 
 The schematic for the relay shield is simple and self explanatory. The shield has four relays that are controlled by pins D0, D1, D2 and D3 on the Core. Each relay is triggered via a NPN transistor that takes a control signal from the core and switches the relay coil ON and OFF which in turn makes or breaks the electrical contact on the output. There is also a [flyback diode](http://en.wikipedia.org/wiki/Flyback_diode) connected across the coil to help protect the transistor from high voltage transients caused during switching.  
 The relays are SPDT (Single Pole Double Throw) type, which means they have three terminals at the output: COMMON (COMM), Normally Open (NO) and Normally Closed (NC). We can either connect the load in between the COMM and NO or COMM and NC terminals. When connected in between COMM and NO, the output remains open/disconnected when the relay is turned OFF and closes/connects when the relay is turned ON. In the later case, the output remains closed/connected when the relay is OFF and opens/disconnets when the relay is ON. 
@@ -152,7 +152,7 @@ Specifications
 Setting up the Relay Shield
 -----
 
-![Relay Shield Connection](images/relay-shield-bulb.jpg)
+![Relay Shield Connection](../images/relay-shield-bulb.jpg)
 
 Turning ON a relay is as simple as setting the associated pin to HIGH.
 
@@ -237,7 +237,7 @@ Project Ideas
 Programmer Shield (JTAG)
 ====
 
-![JTAG Shield Top](images/jtag-topview.jpg)
+![JTAG Shield Top](../images/jtag-topview.jpg)
 
 The programmer shield is a simple adapter that lets you connect a JTAG programmer to the Spark Core. If you need complete control over your Core and are comfortable with the ARM development environment, you will need this shield as an interface between the JTAG programmer and the Core.
 
@@ -250,7 +250,7 @@ Specifications
 Setting up the programmer
 -----
 
-![JTAG Setup](images/jtag-setup.jpg)
+![JTAG Setup](../images/jtag-setup.jpg)
 
 If you are using the STLink V2, you can download the supporting drivers and utilities from [their website.](http://www.st.com/web/catalog/tools/FM146/CL1984/SC724/SS1677/PF251168)
 
@@ -262,12 +262,12 @@ All of the hardware files for the JTAG shield are available for download.
 Battery Shield
 ====
 
-![Battery Shield Top](images/bshield-top.jpg)
+![Battery Shield Top](../images/bshield-top.jpg)
 
 The battery shield is a LiPo battery charger and voltage regulator combined into one. You can use it to power your Core with any 3.7V LiPo battery and charge it at the same time via the USB port.
 The shield is built around  Microchip's MCP73871 battery charge management controller and TI's TPS61200 boost converter for up converting 3.7V to 5.0V.
 
-![Battery Shield Bottom](images/bshield-bottom.jpg)
+![Battery Shield Bottom](../images/bshield-bottom.jpg)
 
 
 <!--TO DO ADD SYSTEM BLOCK DIAGRAM HERE -->
