@@ -128,6 +128,11 @@ Publish an *event* through the Spark Cloud that will be forwarded to all registe
 
 ```cpp
 Spark.publish();
+
+# EXAMPLE REQUEST IN BROWSER
+# Shows all public events in realtime
+# Your access token is 1234123412341234123412341234123412341234
+URL: "https://api.spark.io/v1/events/?access_token=1234123412341234123412341234123412341234"
 ```
 
 This feature will allow the Core to generate an event based on a condition. For example, you could connect a motion sensor to the Core and have the Core generate an event whenever motion is detected.
@@ -197,6 +202,12 @@ Spark.publish(String eventName, String data, int ttl, PRIVATE);
 EXAMPLE
 Spark.publish("front-door-unlocked", NULL, 60, PRIVATE);
 ```
+
+
+
+
+
+
 
 <!--
 ### Spark.subscribe()
