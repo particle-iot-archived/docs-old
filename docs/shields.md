@@ -280,7 +280,7 @@ Operation
 MCP73871 is an intelligent battery charge management controller that allows one to charge the battery and power the system simultaneously. There is also an under voltage lock out which protects the battery from draining completely. The TPS61200 converts the 3.7V to 4.1V battery output to a regulated 5V to power the Core or potentially any other hardware (cellphones?!)  
 The charge current to the battery is set to 500mA.
 
-<!--Link to GitHub repo.-->  
+[Battery Shield Hardware Files >](https://github.com/spark/shields/tree/master/Battery%20Shield)
 
 Specifications
 -----
