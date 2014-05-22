@@ -416,9 +416,14 @@ Emax ES08A is a mini RC servo motor.
 - Operating Voltage: 4.8 to 6.0VDC
 - Stall Torque: 1.8Kg/cm
 - Speed: 0.10sec/degree at no load
-
+ 
 [Datasheet >](http://www.emaxmodel.com/views.asp?hw_id=6)
 
+Wiring:
+
+- Yellow - Signal pin
+- Orange - +5v
+- Brown  - Ground
 
 ### 9. Deluxe Jumper Wire Pack (1)
 
