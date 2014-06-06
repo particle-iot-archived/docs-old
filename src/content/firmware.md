@@ -139,7 +139,7 @@ Spark events have the following properties:
 * name (1–63 ASCII characters)
 * public/private (default public)
 * ttl (time to live, 0–16777215 seconds, default 60)
-  !! NOTE: The user-specified ttl value is not yet implemented and will default to 60
+  !! NOTE: Currently the ttl parameter is ignored, ttl is always zero.
 * optional data (up to 63 bytes)
 
 Anyone may subscribe to public events; think of them like tweets.
