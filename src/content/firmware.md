@@ -139,7 +139,7 @@ Spark events have the following properties:
 * name (1–63 ASCII characters)
 * public/private (default public)
 * ttl (time to live, 0–16777215 seconds, default 60)
-  !! NOTE: The user-specified ttl value is not yet implemented, so changing this property will not currently have any impact.
+  !! NOTE: The user-specified ttl value is not yet implemented and will default to 60
 * optional data (up to 63 bytes)
 
 Anyone may subscribe to public events; think of them like tweets.
@@ -1545,6 +1545,10 @@ UDP
 -----
 
 This class enables UDP messages to be sent and received.
+
+Currently, on reading, datagram packet boundaries are not preserved, parsePacket(), available() and read() are broken. Both remoteIP() and remotePort() are not reliable. On writing, a datagram is sent every write() and not only at endPacket().
+
+However, UDP is still usable if packet delimiters are used and searched for, or if fixed length packets are used, and if the sender and port do not need to be known reliably.
 
 <!-- TO DO -->
 <!-- Add more examples-->
