@@ -1548,6 +1548,10 @@ UDP
 
 This class enables UDP messages to be sent and received.
 
+Currently, on reading, datagram packet boundaries are not preserved: parsePacket(), available() and read() are broken. Both remoteIP() and remotePort() are not reliable. On writing, a datagram is sent every write() and not only at endPacket().
+
+However, UDP is still usable if packet delimiters are used and searched for, or if fixed length packets are used, and if the sender and port do not need to be known reliably.
+
 <!-- TO DO -->
 <!-- Add more examples-->
 
