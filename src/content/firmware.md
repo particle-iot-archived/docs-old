@@ -1385,7 +1385,9 @@ byte server[] = { 74, 125, 224, 72 }; // Google
 void setup()
 {
   Serial.begin(9600);
-  delay(1000);
+  
+  while(!Serial.available()) SPARK_WLAN_Loop(); //Press any keys to continue!
+  
   Serial.println("connecting...");
 
   if (client.connect(server, 80))
