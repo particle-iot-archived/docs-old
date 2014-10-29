@@ -11,12 +11,13 @@ Connecting your Core
 
 The easiest way to connect the Spark Core to Wi-Fi is using the Spark mobile app for iPhone or Android. But in case that's not working for you or you don't have an iOS/Android phone, there are other methods as well.
 
-For all of the following methods, the Spark Core must be in "listening" mode, which you'll know by its flashing blue LED.
+For all of the following methods, the Spark Core must be in [Listening Mode](/connect/#connecting-your-core-listening-mode), which you'll know by its flashing blue LED.
 
 <iframe class="vine-embed" src="https://vine.co/v/hFHlpBDELeU/embed/simple" width="320" height="320" frameborder="0"></iframe>
+
 ## Listening Mode
 
-The Core boots into listening mode by default, so if your Core is brand new, it should go straight into listening mode. Otherwise, hold the MODE button for three seconds.
+The Core boots into listening mode by default, so if your Core is brand new, it should go straight into listening mode. Otherwise, hold the MODE button for three seconds. The RGB LED will be flashing blue in this mode.  To completely clear all stored Wi-Fi credentials, continue to hold the MODE button for 10 seconds until the RGB LED flashes blue quickly, signaling that all profiles have been deleted.  The RGB LED should now be flashing blue again.
 
 ## Smart Config with the Spark app
 
@@ -51,21 +52,9 @@ Once you've finished naming your Cores, you can control them with Tinker! Try *d
 
 For more information on how the *seemingly magical* Smart Config mode works, check out [this community thread by GHawkins](https://community.spark.io/t/smart-config-the-missing-manual-now-available/442)
 
-## Smart Config with the TI app
-
-Smart Config with the Texas Instruments CC3000 app is similar to the process above, although you don't need an account with Spark, and TI also has a Java applet that can work from a Mac, Windows, or Linux computer.
-
-Follow the instructions on Texas Instrument's website:
-
-[CC3000 Smart Config @ Texas Instruments](http://processors.wiki.ti.com/index.php/CC3000_Smart_Config)
-
-The only thing that's different is that you'll need to activate the optional AES key and type `sparkdevices2013`.
-
-*NOTE: TI's Android app is not available in Google Play; you'll have to download it off of their website and side-load the apk yourself.*
-
 ## Connect over USB
 
-You can also connect the Spark Core to your Wi-Fi network over USB by communicating through Serial. *NOTE: This only works when the Spark Core is in listening mode (i.e. rgb led is blinking blue)*.
+You can also connect the Spark Core to your Wi-Fi network over USB by communicating through Serial. *NOTE: This only works when the Spark Core is in [Listening Mode](/connect/#connecting-your-core-listening-mode) (i.e. RGB led is blinking blue)*.
 
 First, you'll need to download a serial terminal application.
 
@@ -86,7 +75,7 @@ On Ubuntu, it looks something like `screen /dev/ttyACM0 9600`. Device location m
 
 __How-to__
 
-Plug your Spark Core into your computer over USB. When the Spark Core is in [Listening Mode](/connect/#Listening-Mode)listening mode, open a serial port over USB using the standard settings, which should be:
+Plug your Spark Core into your computer over USB. When the Spark Core is in [Listening Mode](/connect/#connecting-your-core-listening-mode), open a serial port over USB using the standard settings, which should be:
 
 - Baudrate: 9600
 - Data Bits: 8
@@ -99,10 +88,6 @@ Once you've opened a serial connection, you have two commands at your disposal b
 - **i**: ("i" as in identify) Read out the Spark Core ID
 
 **NOTE:** If you connect your Core over USB the first time, you will also need to manually *claim* your Core to connect it with your account. Please see the section below on [claiming your Core](/#/connect/claiming-your-core) for more details.
-
-## Coming soon: Hard-code credentials
-
-Currently there is not a mechanism to hard-code your SSID and password into the firmware for the Spark Core. We're working on it!
 
 Claiming your Core
 ===
@@ -163,3 +148,19 @@ The procedure is same as the one described above (DFU Mode), but in this case yo
 **Note:** The video here is a continuation of the video from above (DFU Mode).
 
 <iframe class="vine-embed" src="https://vine.co/v/MahOmIaX2xP/embed/simple" width="320" height="320" frameborder="0"></iframe>
+
+## Smart Config with the TI app
+
+Smart Config with the Texas Instruments CC3000 app is similar to the process above, although you don't need an account with Spark, and TI also has a Java applet that can work from a Mac, Windows, or Linux computer.
+
+Follow the instructions on Texas Instrument's website:
+
+[CC3000 Smart Config @ Texas Instruments](http://processors.wiki.ti.com/index.php/CC3000_Smart_Config)
+
+The only thing that's different is that you'll need to activate the optional AES key and type `sparkdevices2013`.
+
+*NOTE: TI's Android app is not available in Google Play; you'll have to download it off of their website and side-load the apk yourself.*
+
+## Coming soon: Hard-code credentials
+
+Currently there is not a mechanism to hard-code your SSID and password into the firmware for the Spark Core. We're working on it!

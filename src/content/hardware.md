@@ -1,7 +1,7 @@
 ---
 word: Datasheet
-title: Spark Core datasheet
-order: 5
+title: Hardware datasheet
+order: 7
 ---
 
 Spark Core Datasheet
@@ -88,29 +88,32 @@ You can download a copy of the RF test report [here.]({{assets}}/images/core-rf-
 
 Pins and I/O
 ---
+![Spark Pinout]({{assets}}/images/spark-pinout.png)
 
 The Spark Core offers a total 18 I/O pins to the user: `D0 to D7`, `A0 to A7` and two pins that are preset to serial - `TX` and `RX`. All of these I/O pins run at *3.3V* and the user should keep this in mind before attaching any external peripherals to them. The only exception to this are the following pins that are tolerant to 5V inputs:
 
 `D0, D1, D3, D4, D5, D6 and D7`
 
+[Click here to view a larger pinout diagram]({{assets}}/images/spark-pinout.png)
+
 ### Digital pins
 
-Each pin on the Core can either be configured as input (with or without pull-up or pull-down) or as output (push-pull or open-drain) using the [pinMode()](#/firmware/input-output-pinmode) function.
+Each pin on the Core can either be configured as input (with or without pull-up or pull-down) or as output (push-pull or open-drain) using the [pinMode()](firmware/#setup-pinmode) function.
 
 
-After setting them up, the user can then write to or read from the pins using [digitalWrite()](#/firmware/input-output-digitalwrite) and [digitalRead()](#/firmware/input-output-digitalread) functions respectively.
+After setting them up, the user can then write to or read from the pins using [digitalWrite()](firmware/#i-o-digitalwrite) and [digitalRead()](firmware/#i-o-digitalread) functions respectively.
 
 Each of these pins can individually source/sink a maximum of 20mA. In the input mode, the user can activate internal pull-up or pull-down resistors (typically equal to 40K ohms). By default these are deactivated.
 
 ### Analog Inputs
 
-Pins A0 to A7 can be set up as analog inputs and can measure voltages of upto 3.3V and are internally referenced to VDD. The user can read the pins using [analogRead()](#/firmware/input-output-analogread) function which returns a 12bit value.
+Pins A0 to A7 can be set up as analog inputs and can measure voltages of upto 3.3V and are internally referenced to VDD. The user can read the pins using [analogRead()](firmware/#i-o-analogread) function which returns a 12bit value.
 
 ### Analog Outputs
 
 This term is misleading and misused but is widely adopted in the Arduino community. The pins that are set to output an analog value don't actually output an analog voltage but rather produce a PWM signal whose duty cycle can be varied thus varying the total average power of the signal. On the Core, the PWM signals have a resolution of 8 bits and run at a frequency of 500Hz.
 
-Having said that, the user can send analog values to the pins using the function [analogWrite().](#/firmware/input-output-analogwrite)
+Having said that, the user can send analog values to the pins using the function [analogWrite().](firmware/#i-o-analogwrite)
 
 This feature is only available on the following pins: `A0, A1, A4, A5, A6, A7, D0 and D1.`
 
@@ -122,7 +125,7 @@ The Core features two serial ports. The first one is a CDC (Communications Devic
 
 The second one is a hardware USART available via the TX and RX pins on the Core.
 
-Both of these serial ports can be configured and used using the [serial functions.](#/firmware/communication-serial)
+Both of these serial ports can be configured and used using the [serial functions.](firmware/#communication-serial)
 
 **NOTE:** Please take into account that the voltage levels on these pins runs at 0V to 3.3V and should not be connected directly to a computer's RS232 serial port which operates at +/- 12V and can damage the Core.
 
@@ -132,10 +135,10 @@ Both of these serial ports can be configured and used using the [serial function
 
 The Serial Peripheral Interface is available on pins:
 
-`A2: SS (Slave Select)`
-`A3: SCK (Serial Clock)`
-`A4: MISO (Master In Slave Out)`
-`A5: MOSI (Master Out Slave In)`
+ - `A2: SS (Slave Select)`
+ - `A3: SCK (Serial Clock)`
+ - `A4: MISO (Master In Slave Out)`
+ - `A5: MOSI (Master Out Slave In)`
 
 **NOTE:** All of these pins run at 3.3V logic levels.
 
@@ -145,8 +148,8 @@ The Serial Peripheral Interface is available on pins:
 
 I2C communication pins are multiplexed with the standard GPIO pins D0 and D1.
 
-`D0: SDA (Serial Data Line)`
-`D1: SCL (Serial Clock)`
+ - `D0: SDA (Serial Data Line)`
+ - `D1: SCL (Serial Clock)`
 
 Both of these pins run at 3.3V logic level but *are* tolerant to 5V inputs.
 

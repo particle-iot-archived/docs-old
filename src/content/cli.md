@@ -1,7 +1,7 @@
 ---
 word: API
-title: Command Line Reference
-order: 7
+title: Command Line
+order: 10
 ---
 
 Spark CLI
@@ -280,7 +280,7 @@ $ spark core rename 0123456789ABCDEFGHI "pirate frosting"
 
 ```sh
 # how to remove a core from your account
-$ node app.js core remove 0123456789ABCDEFGHI
+$ spark core remove 0123456789ABCDEFGHI
 Are you sure?  Please Type yes to continue: yes
 releasing core 0123456789ABCDEFGHI
 server said  { ok: true }
@@ -319,8 +319,8 @@ $ spark flash 0123456789ABCDEFGHI cc3000
 
 # how to flash if your core is blinking yellow and connected over usb
 # requires dfu-util
-$ spark flash 0123456789ABCDEFGHI tinker --usb
-$ spark flash 0123456789ABCDEFGHI cc3000 --usb
+$ spark flash --usb tinker
+$ spark flash --usb cc3000
 ```
 
 
@@ -566,4 +566,3 @@ Coming Soon - more commands to make it easier to change the server settings on y
 $ spark keys server my_server.der
 Okay!  New keys in place, your core will not restart.
 ```
-

@@ -1,6 +1,6 @@
 ---
 word: API
-title: Cloud API reference
+title: Cloud code (API)
 order: 4
 ---
 
@@ -374,6 +374,22 @@ The API endpoint is `/v1/devices/{DEVICE_ID}/{VARIABLE}` and as always, you have
 # Your access token is 1234123412341234123412341234123412341234
 curl "https://api.spark.io/v1/devices/0123456789abcdef01234567/temperature?access_token=1234123412341234123412341234123412341234"
 ```
+And the response contains a `result` like this:
+
+```json
+// EXAMPLE RESPONSE
+{
+  "cmd": "VarReturn",
+  "name": "temperature",
+  "result": 42,
+  "coreInfo": {
+    "last_app": "",
+    "last_heard": "2014-08-22T22:33:25.407Z",
+    "connected": true,
+    "deviceID": "53ff6c065075535119511687"
+  }
+
+```
 
 **NOTE**: Variable names are truncated after the 12th character: `temperature_sensor` is accessible as `temperature_`
 
@@ -395,7 +411,10 @@ at which point you will be immediately notified.
 
 To subscribe to an event stream, make a GET request to one of the following endpoints.
 This will open a Server-Sent Events (SSE) stream, i.e., a TCP socket that stays open.
-In each case, the event name filter in the URI is optional.
+In each case, the event name filter in the URI is optional.  When specifying an event name filter,
+published events will be limited to those events with names that begin with the specified string.
+For example, specifying an event name filter of 'temp' will return events with names 'temp' and 
+'temperature'. 
 
 SSE resources:
 

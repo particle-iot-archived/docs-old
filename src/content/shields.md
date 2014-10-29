@@ -1,7 +1,7 @@
 ---
 word: Accessories
 title: Shields and kits
-order: 6
+order: 8
 ---
 
 Shields and accessories
@@ -89,7 +89,7 @@ Specifications
 - Current consumption: 150mA min to 290mA (at 9V DC)
 - Relay Max Voltage: 250V AC
 - Relay Max Current: 10Amp at 125V AC
-- Relay Part Number: JS1-5V-F  [(Data Sheet)](http://pewa.panasonic.com/assets/pcsd/catalog/js-catalog.pdf)
+- Relay Part Number: JS1-5V-F  [(Data Sheet)](http://www3.panasonic.biz/ac/e_download/control/relay/power/catalog/mech_eng_js.pdf?f_cd=300182)
 - Dimensions: 3.5 x 3.3
 - Weight: 100g
 
@@ -338,7 +338,7 @@ This LED has four pins, one for each color and a common anode (+) pin.
 
 S9013 is a general purpose small signal NPN [transistor](http://en.wikipedia.org/wiki/Transistor) rated at 40V, 500mA.
 
-You can this transistor to switch small loads like relays, mini motors, buzzers, etc.
+You can use this transistor to switch small loads like relays, mini motors, buzzers, etc.
 
 [Datasheet >](http://www.fairchildsemi.com/ds/SS/SS9013.pdf)
 
@@ -480,7 +480,7 @@ Unlike the TMP36, you will need to use this as a part of a voltage divider circu
 Manufacturer Part Number: Interlink 30-81794
 This is a force sensitive resistor with a 0.5" diameter and an operating force from 10g to 1000g. Their resistance decreases with an increase in applied pressure.
 
-[Datasheet >]()
+[Datasheet >](http://media.digikey.com/pdf/Data%20Sheets/Interlink%20Electronics.PDF/FSR400_Series.pdf)
 
 <!-- TO DO ADD LINK TO EXAMPLE-->
 
@@ -502,6 +502,8 @@ There are three different value resistor in this kit. All of them are rated at 5
 - 330-Ohm (10)
 - 1K-Ohm (10)
 - 10K-Ohm (10)
+
+You can use this [online guide](http://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-resistor-color-code-4-band) to help identify which resistor is which value.  
 
 ### 23. Rotary Potentiometer (1)
 

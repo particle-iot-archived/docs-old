@@ -1,6 +1,6 @@
 ---
 word: Firmware
-title: Firmware reference
+title: Core code (Firmware)
 order: 3
 ---
 
@@ -9,8 +9,6 @@ Spark Core Firmware
 
 Cloud Functions
 =====
-
-## Data and Control
 
 ### Spark.variable()
 
@@ -37,7 +35,7 @@ void loop()
   analogvalue = analogRead(A0);
   //Convert the reading into degree celcius
   tempC = (((analogvalue * 3.3)/4095) - 0.5) * 100;
-  Delay(200);
+  delay(200);
 }
 ```
 Currently, up to 10 Spark variables may be defined and each variable name is limited to a max of 12 characters.
@@ -46,7 +44,7 @@ There are three supported data types:
 
  * `INT`
  * `DOUBLE`
- * `STRING`
+ * `STRING`   (maximum string size is 622 bytes)
 
 
 
@@ -281,36 +279,28 @@ A _subscription handler_ (like `myHandler` above) must return `void` and take tw
 
 NOTE: A Core can register up to 4 event handlers. This means you can call `Spark.subscribe()` a maximum of 4 times; after that it will return `false`.
 
-## Connection Management
+### Spark.connect()
 
-### Spark.connected()
+`Spark.connect()` connects the Spark Core to the Cloud. This will automatically activate the Wi-Fi module and attempt to connect to a Wi-Fi network if the Core is not already connected to a network.
 
-Returns `true` when connected to the Spark Cloud, and `false` when disconnected from the Spark Cloud.
-
-```C++
-// SYNTAX
-Spark.connected();
-
-RETURNS
-boolean (true or false)
-
-// EXAMPLE USAGE
-void setup() {
-  Serial.begin(9600);
-}
+```cpp
+void setup() {}
 
 void loop() {
-  if (Spark.connected()) {
-    Serial.println("Connected!");
+  if (Spark.connected() == false) {
+    Spark.connect();
   }
-  delay(1000);
 }
 ```
 
-### Spark.disconnect() and Spark.connect()
+After you call `Spark.connect()`, your loop will not be called again until the Core finishes connecting to the Cloud. Typically, you can expect a delay of approximately one second.
 
-`Spark.disconnect()` disconnects the Spark Core from the Spark Cloud, while
-`Spark.connect()` subsequently reconnects.
+In most cases, you do not need to call `Spark.connect()`; it is called automatically when the Core turns on. Typically you only need to call `Spark.connect()` after disconnecting with [`Spark.disconnect()`](#spark-disconnect) or when you change the [system mode](#advanced-system-modes).
+
+
+### Spark.disconnect()
+
+`Spark.disconnect()` disconnects the Spark Core from the Spark Cloud.
 
 ```C++
 int counter = 10000;
@@ -350,20 +340,66 @@ void loop() {
 }
 ```
 
-The Spark Core connects to the cloud by default, so it's not necessary to call `Spark.connect()` unless you have explicitly disconnected the Core.
+While this function will disconnect from the Spark Cloud, it will keep the connection to the Wi-Fi network. If you would like to completely deactivate the Wi-Fi module, use [`WiFi.off()`](#wifi-off).
 
 NOTE: When the Core is disconnected, many features are not possible, including over-the-air updates, reading Spark.variables, and calling Spark.functions.
 
-*If you flash firmware that does not stay connected very long, you will NOT BE ABLE to flash new firmware.*
+*If you disconnect from the Cloud, you will NOT BE ABLE to flash new firmware over the air. A factory reset should resolve the issue.*
 
-A factory reset should solve this.
+### Spark.connected()
 
-### Spark.deviceID()
----
-
-`Spark.deviceID()` provides an easy way to extract the device ID of your Core.
+Returns `true` when connected to the Spark Cloud, and `false` when disconnected from the Spark Cloud.
 
 ```C++
+// SYNTAX
+Spark.connected();
+
+RETURNS
+boolean (true or false)
+
+// EXAMPLE USAGE
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Spark.connected()) {
+    Serial.println("Connected!");
+  }
+  delay(1000);
+}
+```
+
+### Spark.process()
+
+`Spark.process()` checks the Wi-Fi module for incoming messages from the Cloud, and processes any messages that have come in. It also sends keep-alive pings to the Cloud, so if it's not called frequently, the connection to the Cloud may be lost.
+
+```cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  while (1) {
+    Spark.process();
+    redundantLoop();
+  }
+}
+
+void redundantLoop() {
+  Serial.println("Well that was unnecessary.");
+}
+```
+
+`Spark.process()` is a blocking call, and blocks for a few milliseconds. `Spark.process()` is called automatically after every `loop()` and during delays. Typically you will not need to call `Spark.process()` unless you block in some other way and need to maintain the connection to the Cloud, or you change the [system mode](#advanced-system-modes). If the user puts the Core into `MANUAL` mode, the user is responsible for calling `Spark.process()`. The more frequently this function is called, the more responsive the Core will be to incoming messages, the more likely the Cloud connection will stay open, and the less likely that the CC3000's buffer will overrun.
+
+
+
+### Spark.deviceID()
+
+`Spark.deviceID()` provides an easy way to extract the device ID of your Core. It returns a [String object](#data-types-string-object) of the device ID, which is used frequently in Sparkland to identify your Core.
+
+```cpp
 // EXAMPLE USAGE
 
 void setup()
@@ -371,100 +407,15 @@ void setup()
   // Make sure your Serial Terminal app is closed before powering your Core
   Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
+  while(!Serial.available()) Spark.process();
 
   String myID = Spark.deviceID();
   // Prints out the device ID over Serial
   Serial.println(myID);
 }
 
-void loop()
-{
-
-}
+void loop() {}
 ```
-
-
-
-### Network
----
-
-```C++
-// EXAMPLE USAGE
-
-void setup()
-{
-  byte mac[6];
-
-  // Make sure your Serial Terminal app is closed before powering your Core
-  Serial.begin(9600);
-  // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
-
-  Network.macAddress(mac);
-
-  // Prints out the network parameters over Serial
-  Serial.println(Network.SSID());
-  Serial.println(Network.gatewayIP());
-  Serial.println(Network.subnetMask());
-  Serial.println(Network.localIP());
-
-  // Print the Mac address with formatting
-  // Take note of byte ordering
-  Serial.print(mac[5],HEX);
-  Serial.print(":");
-  Serial.print(mac[4],HEX);
-  Serial.print(":");
-  Serial.print(mac[3],HEX);
-  Serial.print(":");
-  Serial.print(mac[2],HEX);
-  Serial.print(":");
-  Serial.print(mac[1],HEX);
-  Serial.print(":");
-  Serial.println(mac[0],HEX);
-}
-
-void loop()
-{
-
-}
-```
-
-`Network.SSID()` returns the SSID of the network the Core is currently connected to.
-
-`Network.gatewayIP()` returns the gateway IP address of the network.
-
-`Network.macAddress()` returns the MAC address of the device.
-
-`Network.subnetMask()` returns the subnet mask of the network.
-
-`Network.localIP()` returns the local IP address assigned to the Core.
-
-`Network.RSSI()` returns the signal strength of a Wifi network from from -127 to -1dB.
-
-`Network.ping()` allows you to ping an IP address and know the number of packets received.
-
-<!-- TO DO -->
-<!-- Add example implementation here -->
-<!--
-### Spark.print()
-
-Prints to the debug console in Spark's web IDE.
--->
-
-<!-- TO DO -->
-<!-- Add example implementation here -->
-
-<!--
-### Spark.println()
-
-Prints to the debug console in Spark's web IDE, followed by a *newline* character.
--->
-<!-- TO DO -->
-<!-- Add example implementation here -->
-
-Sleep
----
 
 ### Spark.sleep()
 
@@ -482,7 +433,7 @@ Spark.sleep(5);
 ```
 `Spark.sleep(int seconds)` does NOT stop the execution of user code (non-blocking call).  User code will continue running while the Wi-Fi module is in standby mode. During sleep, WiFi.status() will return WIFI_OFF.  Once sleep time has expired and the Wi-FI module attempts reconnection, WiFi.status() will return value WIFI_CONNECTING and WIFI_ON.
 
-`Spark.sleep()` can also be used to put the entire Core into a *deep sleep* mode. In this particular mode, the Core shuts down the Wi-Fi chipset (CC3000) and puts the microcontroller in a stand-by mode.  When the Core awakens from deep sleep, it will reset the Core and run all user code from the beginning with no values being maintained in memory from before the deep sleep.  As such, it is recommended that deep sleep be called only after all user code has completed.
+`Spark.sleep(SLEEP_MODE_DEEP, int seconds)` can be used to put the entire Core into a *deep sleep* mode. In this particular mode, the Core shuts down the Wi-Fi chipset (CC3000) and puts the microcontroller in a stand-by mode.  When the Core awakens from deep sleep, it will reset the Core and run all user code from the beginning with no values being maintained in memory from before the deep sleep.  As such, it is recommended that deep sleep be called only after all user code has completed.
 
 ```C++
 // SYNTAX
@@ -495,6 +446,53 @@ Spark.sleep(SLEEP_MODE_DEEP,60);
 // The Core LED will shut off during deep sleep
 ```
 The Core will automatically *wake up* and reestablish the WiFi connection after the specified number of seconds.
+
+`Spark.sleep(uint16_t wakeUpPin, uint16_t edgeTriggerMode)` can be used to put the entire Core into a *stop* mode with *wakeup on interrupt*. In this particular mode, the Core shuts down the Wi-Fi chipset (CC3000) and puts the microcontroller in a stop mode with configurable wakeup pin and edge triggered interrupt. When the specific interrupt arrives, the Core awakens from stop mode, it will behave as if the Core is reset and run all user code from the beginning with no values being maintained in memory from before the stop mode. As such, it is recommended that stop mode be called only after all user code has completed.
+It is mandatory to update the *bootloader* (https://github.com/spark/core-firmware/tree/bootloader-patch-update) for proper functioning of this mode.
+
+```C++
+// SYNTAX
+Spark.sleep(uint16_t wakeUpPin, uint16_t edgeTriggerMode);
+```
+
+```C++
+// EXAMPLE USAGE: Put the Core into stop mode with wakeup using RISING edge interrupt on D0 pin
+Spark.sleep(D0,RISING);
+// The Core LED will shut off during sleep
+```
+
+*Parameters:*
+
+- `wakeUpPin`: the wakeup pin number. supports external interrupts on the following pins:
+    - D0, D1, D2, D3, D4, A0, A1, A3, A4, A5, A6, A7
+- `edgeTriggerMode`: defines when the interrupt should be triggered. Four constants are predefined as valid values:
+    - CHANGE to trigger the interrupt whenever the pin changes value,
+    - RISING to trigger when the pin goes from low to high,
+    - FALLING for when the pin goes from high to low.
+
+`Spark.sleep(uint16_t wakeUpPin, uint16_t edgeTriggerMode, long seconds)` can be used to put the entire Core into a *stop* mode with *wakeup on interrupt* or *wakeup after specified seconds*. In this particular mode, the Core shuts down the Wi-Fi chipset (CC3000) and puts the microcontroller in a stop mode with configurable wakeup pin and edge triggered interrupt or wakeup after the specified seconds . When the specific interrupt arrives or upon reaching configured seconds, the Core awakens from stop mode, it will behave as if the Core is reset and run all user code from the beginning with no values being maintained in memory from before the stop mode. As such, it is recommended that stop mode be called only after all user code has completed.
+It is mandatory to update the *bootloader* (https://github.com/spark/core-firmware/tree/bootloader-patch-update) for proper functioning of this mode.
+
+```C++
+// SYNTAX
+Spark.sleep(uint16_t wakeUpPin, uint16_t edgeTriggerMode, long seconds);
+```
+
+```C++
+// EXAMPLE USAGE: Put the Core into stop mode with wakeup using RISING edge interrupt on D0 pin or wakeup after 60 seconds whichever comes first
+Spark.sleep(D0,RISING,60);
+// The Core LED will shut off during sleep
+```
+
+*Parameters:*
+
+- `wakeUpPin`: the wakeup pin number. supports external interrupts on the following pins:
+    - D0, D1, D2, D3, D4, A0, A1, A3, A4, A5, A6, A7
+- `edgeTriggerMode`: defines when the interrupt should be triggered. Four constants are predefined as valid values:
+    - CHANGE to trigger the interrupt whenever the pin changes value,
+    - RISING to trigger when the pin goes from low to high,
+    - FALLING for when the pin goes from high to low.
+- `seconds`: wakeup after the specified number of seconds
 
 In *standard sleep mode*, the Core current consumption is in the range of: **30mA to 38mA**
 
@@ -510,9 +508,6 @@ Spark.sleep(int millis, array peripherals);
 
 <!-- TO DO -->
 <!-- Add example implementation here -->
-
-
-## Time
 
 ### Spark.syncTime()
 
@@ -531,6 +526,163 @@ void loop() {
     Spark.syncTime();
     lastSync = millis();
   }
+}
+```
+
+
+
+WiFi
+=====
+
+### WiFi.on()
+
+`WiFi.on()` turns on the Wi-Fi module. Useful when you've turned it off, and you changed your mind.
+
+Note that `WiFi.on()` does not need to be called unless you have changed the [system mode](#advanced-system-modes) or you have previously turned the Wi-Fi module off.
+
+### WiFi.off()
+
+`WiFi.off()` turns off the Wi-Fi module. Useful for saving power, since most of the power draw of the Spark Core is the Wi-Fi module.
+
+### WiFi.connect()
+
+Attempts to connect to the Wi-Fi network. If there are no credentials stored, this will enter listening mode. If there are credentials stored, this will try the available credentials until connection is successful. When this function returns, the device may not have an IP address on the LAN; use `WiFi.ready()` to determine the connection status.
+
+### WiFi.disconnect()
+
+Disconnects from the Wi-Fi network, but leaves the Wi-Fi module on.
+
+### WiFi.connecting()
+
+This function will return `true` once the Core is attempting to connect using stored Wi-Fi credentials, and will return `false` once the Core has successfully connected to the Wi-Fi network.
+
+### WiFi.ready()
+
+This function will return `true` once the Core is connected to the network and has been assigned an IP address, which means that it's ready to open TCP sockets and send UDP datagrams. Otherwise it will return `false`.
+
+### WiFi.listen()
+
+This will enter listening mode, which opens a Serial connection to get Wi-Fi credentials over USB, and also listens for credentials over Smart Config.
+
+### WiFi.listening()
+
+This will return `true` once `WiFi.listen()` has been called and will return `false` once the Core has been given some Wi-Fi credentials to try, either over USB or Smart Config.
+
+### WiFi.setCredentials()
+
+Allows the user to set credentials for the Wi-Fi network from within the code. These credentials will be added to the CC3000's memory, and the Core will automatically attempt to connect to this network in the future.
+
+```cpp
+// Connects to an unsecured network.
+WiFi.setCredentials(SSID);
+WiFi.setCredentials("My_Router_Is_Big");
+
+// Connects to a network secured with WPA2 credentials.
+WiFi.setCredentials(SSID, PASSWORD);
+WiFi.setCredentials("My_Router", "mypasswordishuge");
+
+// Connects to a network with a specified authentication procedure.
+// Options are WPA2, WPA, or WEP.
+WiFi.setCredentials(SSID, PASSWORD, AUTH);
+WiFi.setCredentials("My_Router", "wepistheworst", WEP);
+```
+
+### WiFi.clearCredentials()
+
+This will clear all saved credentials from the CC3000's memory. This will return `true` on success and `false` if the CC3000 has an error.
+
+### WiFi.hasCredentials()
+
+Will return `true` if there are Wi-Fi credentials stored in the CC3000's memory.
+
+### WiFi.macAddress()
+
+`WiFi.macAddress()` returns the MAC address of the device.
+
+```cpp
+
+byte mac[6];
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial.available()) Spark.process();
+
+  WiFi.macAddress(mac);
+
+  Serial.print(mac[5],HEX);
+  Serial.print(":");
+  Serial.print(mac[4],HEX);
+  Serial.print(":");
+  Serial.print(mac[3],HEX);
+  Serial.print(":");
+  Serial.print(mac[2],HEX);
+  Serial.print(":");
+  Serial.print(mac[1],HEX);
+  Serial.print(":");
+  Serial.println(mac[0],HEX);
+}
+
+void loop() {}
+```
+
+### WiFi.SSID()
+
+`WiFi.SSID()` returns the SSID of the network the Core is currently connected to as a `char*`.
+
+### WiFi.RSSI()
+
+`WiFi.RSSI()` returns the signal strength of a Wifi network from from -127 to -1dB as an `int`. Positive return values indicate an error with 1 indicating a WiFi chip error and 2 indicating a time-out error. 
+
+### WiFi.ping()
+
+`WiFi.ping()` allows you to ping an IP address and returns the number of packets received as an `int`. It takes two forms:
+
+`WiFi.ping(IPAddress remoteIP)` takes an `IPAddress` and pings that address.
+
+`WiFi.ping(IPAddress remoteIP, uint8_t nTries)` and pings that address a specified number of times.
+
+### WiFi.localIP()
+
+`WiFi.localIP()` returns the local IP address assigned to the Core as an `IPAddress`.
+
+```cpp
+
+void setup() {
+  Serial.begin(9600);
+  while(!Serial.available()) Spark.process();
+
+  // Prints out the local IP over Serial.
+  Serial.println(WiFi.localIP());
+}
+```
+
+### WiFi.subnetMask()
+
+`WiFi.subnetMask()` returns the subnet mask of the network as an `IPAddress`.
+
+```cpp
+
+void setup() {
+  Serial.begin(9600);
+  while(!Serial.available()) Spark.process();
+
+  // Prints out the subnet mask over Serial.
+  Serial.println(WiFi.subnetMask());
+}
+```
+
+### WiFi.gatewayIP()
+
+`WiFi.gatewayIP()` returns the gateway IP address of the network as an `IPAddress`.
+
+```cpp
+
+void setup() {
+  Serial.begin(9600);
+  while(!Serial.available()) Spark.process();
+
+  // Prints out the gateway IP over Serial.
+  Serial.println(WiFi.gatewayIP());
 }
 ```
 
@@ -714,6 +866,157 @@ void loop()
 }
 ```
 
+Advanced I/O
+------
+
+### tone()
+
+Generates a square wave of the specified frequency and duration (and 50% duty cycle) on a timer channel pin (D0, D1, A0, A1, A4, A5, A6, A7, RX, TX). Use of the tone() function will interfere with PWM output on the selected pin.
+
+```C++
+// SYNTAX
+tone(pin, frequency, duration)
+```
+
+`tone()` takes three arguments, `pin`: the pin on which to generate the tone, `frequency`: the frequency of the tone in hertz and `duration`: the duration of the tone in milliseconds (a zero value = continuous tone).
+
+`tone()` does not return anything.
+
+```C++
+// EXAMPLE USAGE
+// Plays a melody - Connect small speaker to analog pin A0
+
+int speakerPin = A0;
+
+// notes in the melody:
+int melody[] = {1908,2551,2551,2273,2551,0,2024,1908}; //C4,G3,G3,A3,G3,0,B3,C4
+
+// note durations: 4 = quarter note, 8 = eighth note, etc.:
+int noteDurations[] = {4,8,8,4,4,4,4,4 };
+
+void setup() {
+  // iterate over the notes of the melody:
+  for (int thisNote = 0; thisNote < 8; thisNote++) {
+
+    // to calculate the note duration, take one second 
+    // divided by the note type.
+    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    int noteDuration = 1000/noteDurations[thisNote];
+    tone(speakerPin, melody[thisNote],noteDuration);
+
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noTone(speakerPin);
+  }
+}
+```
+
+### noTone()
+
+Stops the generation of a square wave triggered by tone() on a specified pin (D0, D1, A0, A1, A4, A5, A6, A7, RX, TX). Has no effect if no tone is being generated.
+
+
+```C++
+// SYNTAX
+noTone(pin)
+```
+
+`noTone()` takes one argument, `pin`: the pin on which to stop generating the tone.
+
+`noTone()` does not return anything.
+
+```C++
+//See the tone() example
+```
+
+### shiftOut()
+
+Shifts out a byte of data one bit at a time on a specified pin. Starts from either the most (i.e. the leftmost) or least (rightmost) significant bit. Each bit is written in turn to a data pin, after which a clock pin is pulsed (taken high, then low) to indicate that the bit is available.
+Note: if you're interfacing with a device that's clocked by rising edges, you'll need to make sure that the clock pin is low before the call to shiftOut(), e.g. with a call to digitalWrite(clockPin, LOW).
+This is a software implementation; see also the SPI function, which provides a hardware implementation that is faster but works only on specific pins.
+
+
+```C++
+// SYNTAX
+shiftOut(dataPin, clockPin, bitOrder, value)
+```
+
+`shiftOut()` takes four arguments, 'dataPin': the pin on which to output each bit, `clockPin`: the pin to toggle once the dataPin has been set to the correct value, `bitOrder`: which order to shift out the bits; either MSBFIRST or LSBFIRST (Most Significant Bit First, or, Least Significant Bit First) and `value`: the data (byte) to shift out.
+
+`shiftOut()` does not return anything.
+
+```C++
+// EXAMPLE USAGE
+
+// Use digital pins D0 for data and D1 for clock
+int dataPin = D0;
+int clock = D1;
+
+uint8_t data = 50;
+
+setup() {
+	// Set data and clock pins as OUTPUT pins before using shiftOut()
+	pinMode(dataPin, OUTPUT);
+	pinMode(clock, OUTPUT);
+	
+	// shift out data using MSB first
+	shiftOut(dataPin, clock, MSBFIRST, data);
+
+	// Or do this for LSBFIRST serial
+	shiftOut(dataPin, clock, LSBFIRST, data);  
+}
+
+loop() {
+	// nothing to do
+}
+```
+
+### shiftIn()
+
+Shifts in a byte of data one bit at a time. Starts from either the most (i.e. the leftmost) or least (rightmost) significant bit. For each bit, the clock pin is pulled high, the next bit is read from the data line, and then the clock pin is taken low.
+Note: if you're interfacing with a device that's clocked by rising edges, you'll need to make sure that the clock pin is low before the call to shiftOut(), e.g. with a call to digitalWrite(clockPin, LOW).
+This is a software implementation; see also the SPI function, which provides a hardware implementation that is faster but works only on specific pins.
+
+
+```C++
+// SYNTAX
+shiftIn(dataPin, clockPin, bitOrder)
+```
+
+`shiftIn()` takes three arguments, 'dataPin': the pin on which to input each bit, `clockPin`: the pin to toggle to signal a read from dataPin, `bitOrder`: which order to shift in the bits; either MSBFIRST or LSBFIRST (Most Significant Bit First, or, Least Significant Bit First).
+
+`shiftIn()` returns the byte value read.
+
+
+```C++
+// EXAMPLE USAGE
+
+// Use digital pins D0 for data and D1 for clock
+int dataPin = D0;
+int clock = D1;
+
+uint8_t data;
+
+setup() {
+	// Set data as INPUT and clock pin as OUTPUT before using shiftIn()
+	pinMode(dataPin, INPUT);
+	pinMode(clock, OUTPUT);
+	
+	// shift in data using MSB first
+	data = shiftIn(dataPin, clock, MSBFIRST);
+
+	// Or do this for LSBFIRST serial
+	data = shiftIn(dataPin, clock, LSBFIRST);  
+}
+
+loop() {
+	// nothing to do
+}
+```
+
 
 Communication
 ===
@@ -725,7 +1028,11 @@ Used for communication between the Spark Core and a computer or other devices. T
 
 `Serial:` This channel communicates through the USB port and when connected to a computer, will show up as a virtual COM port.
 
-`Serial1:` This channel is available via the Core's TX and RX pins. To use these pins to communicate with your personal computer, you will need an additional USB-to-serial adapter. To use them to communicate with an external TTL serial device, connect the TX pin to your device's RX pin, the RX to your device's TX pin, and the ground of your Core to your device's ground.
+`Serial1:` This channel is available via the Core's TX and RX pins.
+
+`Serial2:` This channel is optionally available via the Core's D1(TX) and D0(RX) pins. To use Serial2, add `#include "Serial2/Serial2.h"` near the top of your Spark App's main code file.
+
+To use the TX/RX (Serial1) or D1/D0 (Serial2) pins to communicate with your personal computer, you will need an additional USB-to-serial adapter. To use them to communicate with an external TTL serial device, connect the TX pin to your device's RX pin, the RX to your device's TX pin, and the ground of your Core to your device's ground.
 
 **NOTE:** Please take into account that the voltage levels on these pins runs at 0V to 3.3V and should not be connected directly to a computer's RS232 serial port which operates at +/- 12V and can damage the Core.
 
@@ -737,6 +1044,7 @@ Sets the data rate in bits per second (baud) for serial data transmission. For c
 // SYNTAX
 Serial.begin(speed);    // serial via USB port
 Serial1.begin(speed);   // serial via TX and RX pins
+Serial2.begin(speed);   // serial via D1(TX) and D0(RX) pins
 ```
 `speed`: parameter that specifies the baud rate *(long)*
 
@@ -1001,16 +1309,15 @@ Sets the SPI clock divider relative to the system clock. The available dividers 
 SPI.setClockDivider(divider) ;
 ```
 Where the parameter, `divider` can be:
-```
-SPI_CLOCK_DIV2
-SPI_CLOCK_DIV4
-SPI_CLOCK_DIV8
-SPI_CLOCK_DIV16
-SPI_CLOCK_DIV32
-SPI_CLOCK_DIV64
-SPI_CLOCK_DIV128
-SPI_CLOCK_DIV256
-```
+
+ - `SPI_CLOCK_DIV2`
+ - `SPI_CLOCK_DIV4`
+ - `SPI_CLOCK_DIV8`
+ - `SPI_CLOCK_DIV16`
+ - `SPI_CLOCK_DIV32`
+ - `SPI_CLOCK_DIV64`
+ - `SPI_CLOCK_DIV128`
+ - `SPI_CLOCK_DIV256`
 
 ### setDataMode()
 
@@ -1022,12 +1329,10 @@ SPI.setDataMode(mode) ;
 ```
 Where the parameter, `mode` can be:
 
-```
-SPI_MODE0
-SPI_MODE1
-SPI_MODE2
-SPI_MODE3
-```
+ - `SPI_MODE0`
+ - `SPI_MODE1`
+ - `SPI_MODE2`
+ - `SPI_MODE3`
 
 ### transfer()
 
@@ -1045,6 +1350,33 @@ Wire
 ![I2C]({{assets}}/images/core-pin-i2c.jpg)
 
 This library allows you to communicate with I2C / TWI devices. On the Spark Core, D0 is the Serial Data Line (SDA) and D1 is the Serial Clock (SCL). Both of these pins runs at 3.3V logic but are tolerant to 5V.
+Connect a pull-up resistor(1.5K to 10K) on SDA line. Connect a pull-up resistor(1.5K to 10K) on SCL line.
+
+### setSpeed()
+
+Sets the I2C clock speed. This is an optional call (not from the original Arduino specs.) and should normally be called once before calling begin().
+
+```C++
+// SYNTAX
+Wire.setSpeed(clockSpeed);
+```
+
+Parameters: 
+
+- `clockSpeed`: CLOCK_SPEED_100KHZ, CLOCK_SPEED_400KHZ or user specified speeds.
+
+### stretchClock()
+
+Enables or Disables I2C clock stretching. This is an optional call (not from the original Arduino specs.).
+
+```C++
+// SYNTAX
+Wire.stretchClock(stretch);
+```
+
+Parameters: 
+
+- `stretch`: boolean. true will enable clock stretching. false will disable clock stretching.
 
 ### begin()
 
@@ -1142,25 +1474,23 @@ Returns:  `byte`
 
 ```C++
 // EXAMPLE USAGE
-byte val = 0;
+// Master Writer running on Core No.1 (Use with corresponding Slave Reader running on Core No.2)
 
 void setup()
 {
-  Wire.begin(); // join i2c bus
+  Wire.begin();              // join i2c bus as master
 }
+
+byte x = 0;
 
 void loop()
 {
-  Wire.beginTransmission(44); // transmit to device #44 (0x2c)
-                              // device address is specified in datasheet
-  Wire.write(val);            // sends value byte
-  Wire.endTransmission();     // stop transmitting
+  Wire.beginTransmission(4); // transmit to slave device #4
+  Wire.write("x is ");       // sends five bytes
+  Wire.write(x);             // sends one byte  
+  Wire.endTransmission();    // stop transmitting
 
-  val++;        // increment value
-  if(val == 64) // if reached 64th position (max)
-  {
-    val = 0;    // start over from lowest value
-  }
+  x++;
   delay(500);
 }
 ```
@@ -1187,21 +1517,22 @@ Returns: The next byte received
 
 ```C++
 // EXAMPLE USAGE
+// Master Reader running on Core No.1 (Use with corresponding Slave Writer running on Core No.2)
 
 void setup()
 {
-  Wire.begin();           // join i2c bus (address optional for master)
-  Serial.begin(9600);     // start serial for output
+  Wire.begin();              // join i2c bus as master
+  Serial.begin(9600);        // start serial for output
 }
 
 void loop()
 {
-  Wire.requestFrom(2, 6); // request 6 bytes from slave device #2
+  Wire.requestFrom(2, 6);    // request 6 bytes from slave device #2
 
-  while(Wire.available()) // slave may send less than requested
-  {
-    char c = Wire.read(); // receive a byte as character
-    Serial.print(c);      // print the character
+  while(Wire.available())    // slave may send less than requested
+  { 
+    char c = Wire.read();    // receive a byte as character
+    Serial.print(c);         // print the character
   }
 
   delay(500);
@@ -1214,11 +1545,64 @@ Registers a function to be called when a slave device receives a transmission fr
 
 Parameters: `handler`: the function to be called when the slave receives data; this should take a single int parameter (the number of bytes read from the master) and return nothing, e.g.: `void myHandler(int numBytes) `
 
+```C++
+// EXAMPLE USAGE
+// Slave Reader running on Core No.2 (Use with corresponding Master Writer running on Core No.1)
+
+// function that executes whenever data is received from master
+// this function is registered as an event, see setup()
+void receiveEvent(int howMany)
+{
+  while(1 < Wire.available())   // loop through all but the last
+  {
+    char c = Wire.read();       // receive byte as a character
+    Serial.print(c);            // print the character
+  }
+  int x = Wire.read();          // receive byte as an integer
+  Serial.println(x);            // print the integer
+}
+
+void setup()
+{
+  Wire.begin(4);                // join i2c bus with address #4
+  Wire.onReceive(receiveEvent); // register event
+  Serial.begin(9600);           // start serial for output
+}
+
+void loop()
+{
+  delay(100);
+}
+```
+
 ### onRequest()
 
 Register a function to be called when a master requests data from this slave device.
 
 Parameters: `handler`: the function to be called, takes no parameters and returns nothing, e.g.: `void myHandler() `
+
+```C++
+// EXAMPLE USAGE
+// Slave Writer running on Core No.2 (Use with corresponding Master Reader running on Core No.1)
+
+// function that executes whenever data is requested by master
+// this function is registered as an event, see setup()
+void requestEvent()
+{
+  Wire.write("hello ");         // respond with message of 6 bytes as expected by master
+}
+
+void setup()
+{
+  Wire.begin(2);                // join i2c bus with address #2
+  Wire.onRequest(requestEvent); // register event
+}
+
+void loop()
+{
+  delay(100);
+}
+```
 
 IPAddress
 -----
@@ -1308,7 +1692,7 @@ void setup()
   Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
   while(!Serial.available()) SPARK_WLAN_Loop();
-   
+
   Serial.println(Network.localIP());
   Serial.println(Network.subnetMask());
   Serial.println(Network.gatewayIP());
@@ -1419,7 +1803,7 @@ void setup()
   Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
   while(!Serial.available()) SPARK_WLAN_Loop();
-  
+
   Serial.println("connecting...");
 
   if (client.connect(server, 80))
@@ -1770,7 +2154,7 @@ Returns:
 - `int`: the port of the UDP connection to a remote host
 
 Libraries
-===
+=====
 
 Servo
 ---
@@ -2180,9 +2564,9 @@ Parameters: floating point offset from UTC in hours, from -12.0 to 13.0
 Set the Spark Core's time to the given timestamp.
 
 *NOTE*: This will override the time set by the Spark Cloud.
-If the cloud connection drops, the reconnection handshake will set the time again.
+If the cloud connection drops, the reconnection handshake will set the time again
 
-Also see: [`Spark.syncTime()`](#/firmware/time-spark-synctime)
+Also see: [`Spark.syncTime()`](#spark-synctime)
 
 ```cpp
 // Set the time to 2014-10-11 13:37:42
@@ -2203,7 +2587,7 @@ Returns: String
 
 
 Other functions
-====
+=====
 
 Note that most of the functions in newlib described at https://sourceware.org/newlib/libc.html are available for use in addition to the functions outlined below.
 
@@ -2639,8 +3023,99 @@ uint8_t val = 0x45;
 EEPROM.write(addr, val);
 ```
 
+Advanced: System Modes
+=====
+
+By default, the Spark Core connects to the Cloud and processes messages automatically. However there are many cases where a user will want to take control over that connection. There are three available system modes: `AUTOMATIC`, `SEMI_AUTOMATIC`, and `MANUAL`. These modes describe how connectivity is handled.
+
+System modes must be called before the setup() function. By default, the Core is always in `AUTOMATIC` mode.
+
+Automatic mode
+----
+
+The automatic mode of connectivity provides the default behavior of the Spark Core, which is that:
+
+```cpp
+SYSTEM_MODE(AUTOMATIC);
+
+void setup() {
+  // This won't be called until the Core is connected
+}
+
+void loop() {
+  // Neither will this
+}
+```
+
+- When the Core starts up, it automatically tries to connect to Wi-Fi and the Spark Cloud.
+- Once a connection with the Spark Cloud has been established, the user code starts running.
+- Messages to and from the Cloud are handled in between runs of the user loop; the user loop automatically alternates with [`Spark.process()`](#spark-process).
+- `Spark.process()` is also called during any delay() of at least 1 second.
+- If the user loop blocks for more than about 20 seconds, the connection to the Cloud will be lost. To prevent this from happening, the user can call `Spark.process()` manually.
+- If the connection to the Cloud is ever lost, the Core will automatically attempt to reconnect. This re-connection will block from a few milliseconds up to 8 seconds.
+- `SYSTEM_MODE(AUTOMATIC)` does not need to be called, because it is the default state; however the user can invoke this method to make the mode explicit.
+
+In automatic mode, the user can still call `Spark.disconnect()` to disconnect from the Cloud, but is then responsible for re-connecting to the Cloud by calling `Spark.connect()`.
+
+Semi-automatic mode
+----
+
+The semi-automatic mode will not attempt to connect the Core to the Cloud automatically. However once the Core is connected to the Cloud (through some user intervention), messages will be processed automatically, as in the automatic mode above.
+
+```cpp
+SYSTEM_MODE(SEMI_AUTOMATIC);
+
+void setup() {
+  // This is called immediately
+}
+
+void loop() {
+  if (buttonIsPressed()) {
+    Spark.connect();
+  } else {
+    doOfflineStuff();
+  }
+}
+```
+
+The semi-automatic mode is therefore much like the automatic mode, except:
+
+- When the Core boots up, the user code will begin running immediately.
+- When the user calls [`Spark.connect()`](#spark-connect), the user code will be blocked, and the Core will attempt to negotiate a connection. This connection will block until either the Core connects to the Cloud or an interrupt is fired that calls [`Spark.disconnect()`](#spark-disconnect).
+
+Manual mode
+----
+
+The "manual" mode puts the Spark Core's connectivity completely in the user's control. This means that the user is responsible for both establishing a connection to the Spark Cloud and handling communications with the Cloud by calling [`Spark.process()`](#spark-process) on a regular basis.
+
+```cpp
+SYSTEM_MODE(MANUAL);
+
+void setup() {
+  // This will run automatically
+}
+
+void loop() {
+  if (buttonIsPressed()) {
+    Spark.connect();
+  }
+  if (Spark.connected()) {
+    Spark.process();
+    doOtherStuff();
+  }
+}
+```
+
+When using manual mode:
+
+- The user code will run immediately when the Core is powered on.
+- Once the user calls [`Spark.connect()`](#spark-connect), the Core will attempt to begin the connection process.
+- Once the Core is connected to the Cloud ([`Spark.connected()`](#spark-connected)` == true`), the user must call `Spark.process()` regularly to handle incoming messages and keep the connection alive. The more frequently `Spark.process()` is called, the more responsive the Core will be to incoming messages.
+- If `Spark.process()` is called less frequently than every 20 seconds, the connection with the Cloud will die. It may take a couple of additional calls of `Spark.process()` for the Core to recognize that the connection has been lost.
+
+
 Language Syntax
-========
+=====
 The following documentation is based on the Arduino reference which can be found [here.](http://arduino.cc/en/Reference/HomePage)
 
 Structure
@@ -2648,7 +3123,7 @@ Structure
 ### setup()
 The setup() function is called when an application starts. Use it to initialize variables, pin modes, start using libraries, etc. The setup function will only run once, after each powerup or reset of the Spark Core.
 
-```C++
+```cpp
 // EXAMPLE USAGE
 int button = D0;
 int LED = D1;
@@ -2884,7 +3359,7 @@ switch (var)
     // do something when var equals 2
     break;
   default:
-    // if nothing else matches, do the 
+    // if nothing else matches, do the
     // default (which is optional)
 }
 ```
@@ -3016,7 +3491,7 @@ With that said, there are instances where a `goto` statement can come in handy, 
 for(byte r = 0; r < 255; r++) {
   for(byte g = 255; g > -1; g--) {
     for(byte b = 0; b < 255; b++) {
-      if (analogRead(0) > 250) { 
+      if (analogRead(0) > 250) {
         goto bailout;
       }
       // more statements ...
@@ -3024,7 +3499,7 @@ for(byte r = 0; r < 255; r++) {
   }
 }
 bailout:
-// Code execution jumps here from 
+// Code execution jumps here from
 // goto bailout; statement
 ```
 
@@ -4022,7 +4497,7 @@ Returns: None
 
 
 Variables
-========
+=====
 
 Constants
 ----
@@ -4267,7 +4742,7 @@ In the code below, the asterisk after the datatype char "char*" indicates that t
 ```cpp
 //EXAMPLE
 
-char* myStrings[] = {"This is string 1", "This is string 2", 
+char* myStrings[] = {"This is string 1", "This is string 2",
 "This is string 3", "This is string 4", "This is string 5",
 "This is string 6"};
 

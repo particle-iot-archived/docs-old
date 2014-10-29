@@ -1,13 +1,13 @@
 ---
 word: Examples
-title: Annotated examples
+title: Examples
 order: 2
 ---
 
 Annotated examples
 =======
 
-Here you will find a bunch of examples to get you started with your all new Spark Core!
+Here you will find a bunch of examples to get you started with your new Spark Core!
 
 Blink an LED
 ===
@@ -18,7 +18,7 @@ Blinking an LED is the ["Hello World"](http://en.wikipedia.org/wiki/Hello_world_
 
 For this example, you will need a Spark Core (duh!), a Breadboard, an LED, a Resistor (we will soon find out a suitable value) and a USB cable.
 
-Connect everything together as shown in the picture. The LED is connected to pin D0 of the Core. The positive (longer pin) of the LED is connected to D0 and its negative pin (shorter) is connected to ground via a resistor.
+Connect everything together as shown in the picture. The LED is connected to pin D0 of the Core. The positive (longer pin) of the LED is connected to D0 via a resistor and its negative pin (shorter) is connected to ground.
 
 ![One LED setup]({{assets}}/images/breadboard-one-led.jpg)
 
@@ -169,7 +169,7 @@ In this example, we will hook up a temperature sensor to the Core and read the v
 
 ![Read Temperature]({{assets}}/images/breadboard-temp-sensor.jpg)
 
-We have used a widely available analog temperature sensor called TMP36 from Analog Devices. You can download the [datasheet here.](http://www.analog.com/static/imported-files/data_sheets/TMP35_36_37.pdf)
+We have used a widely available analog temperature sensor called TMP36 from Analog Devices, and is the temperature sensor that comes with your Spark Maker Kit! You can download the [datasheet here.](http://www.analog.com/static/imported-files/data_sheets/TMP35_36_37.pdf)
 
 Notice how we are powering the sensor from 3.3V\* pin instead of the regular 3.3V. This is because the 3.3V\* pin gives out a (LC) clean filtered  voltage, ideal for analog applications like these. If the readings you get are noisy or inconsistent, add a 0.01uF (10nF) ceramic capacitor between the analog input pin (in this case, A7) and GND as shown in the set up. Ideally, the sensor should be placed away from the Core so that the heat dissipated by the Core does not affect the temperature readings.
 
@@ -179,12 +179,12 @@ Notice how we are powering the sensor from 3.3V\* pin instead of the regular 3.3
 // -----------------
 
 // Create a variable that will store the temperature value
-int temperature = 0;
+double temperature = 0.0;
 
 void setup()
 {
   // Register a Spark variable here
-  Spark.variable("temperature", &temperature, INT);
+  Spark.variable("temperature", &temperature, DOUBLE);
 
   // Connect the temperature sensor to A7 and configure it
   // to be an input
@@ -193,17 +193,20 @@ void setup()
 
 void loop()
 {
-  // Keep reading the temperature so when we make an API
+  int reading = 0;
+  double voltage = 0.0;
+  
+  // Keep reading the sensor value so when we make an API
   // call to read its value, we have the latest one
-  temperature = analogRead(A7);
+  reading = analogRead(A7);
+  
+  // The returned value from the Core is going to be in the range from 0 to 4095
+  // Calculate the voltage from the sensor reading
+  voltage = (reading * 3.3) / 4095;
+  
+  // Calculate the temperature and update our static variable
+  temperature = (voltage - 0.5) * 100;
 }
-```
-
-The returned value from the Core is going to be in the range from 0 to 4095. You can easily convert this value to actual temperature reading by using the following formula:
-
-```
-voltage = (sensor reading x 3.3)/4095
-Temperature (in Celsius) = (voltage - 0.5) X 100
 ```
 
 ---
