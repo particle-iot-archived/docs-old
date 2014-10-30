@@ -529,6 +529,10 @@ void loop() {
 }
 ```
 
+### Spark.reset()
+
+
+
 
 
 WiFi
