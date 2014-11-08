@@ -121,12 +121,15 @@ This feature is only available on the following pins: `A0, A1, A4, A5, A6, A7, D
 
 ![Hardware USART]({{assets}}/images/core-pin-usart.jpg)
 
-The Core features two serial ports. The first one is a CDC (Communications Device Class) available over the USB port . When configured, it will show up as a virtual COM port on the computer.
+The Core features two serial ports. The first one is a CDC (Communications Device Class) available over the USB port . When configured, it will show up as a virtual COM port on the computer (for example on Windows "COM7" or on Unix systems it might be "/dev/ttyUSB0" - though these will vary somewhat). 
 
-The second one is a hardware USART available via the TX and RX pins on the Core.
+The second one is a hardware USART available via the TX and RX pins on the Core. If you are used to using the Arduino programming environment, you need to remember that "Serial.println..." sends ONLY to the USB virtual, not to both channels as it does on Arduino. So, to access Spark's hardware TX and RX pins use "Serial1.println..." syntax. 
+
+---
+GUYS THIS LINK IS BROKEN AND I CANT REALLY SEE WHERE ITS SPOSED TO POINT - ANYONE KNOW/ - ALAN T 03-Nov-2014
 
 Both of these serial ports can be configured and used using the [serial functions.](firmware/#communication-serial)
-
+---
 **NOTE:** Please take into account that the voltage levels on these pins runs at 0V to 3.3V and should not be connected directly to a computer's RS232 serial port which operates at +/- 12V and can damage the Core.
 
 ### SPI
