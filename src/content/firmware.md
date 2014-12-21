@@ -1711,6 +1711,7 @@ void loop()
     }
   } else {
     // if no client is yet connected, check for a new connection
+    //NOTE: This must execute at least once to begin listening for a connection.
     client = server.available();
   }
 }
