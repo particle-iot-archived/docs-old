@@ -113,13 +113,13 @@ Account Information
 
 There are a couple of other neat bells and whistles in Spark Build.  The Spark Build IDE the best tool for viewing important information about your Core, managing Cores associated with your Spark account, and "unclaiming" them so they can be transferred to your buddy.
 
-![Spark Build]({{assets}}/images/ide-i-button.png)
+![Spark Build]({{assets}}/images/device-id.jpg)
 
 - **Core ID**: You can view your Core's Device ID by clicking on the "Cores" icon at the bottom of the navigation pane, then clicking the dropdown arrow next to the Core of interest.
 
 - **Unclaim**: You can "Unclaim" a Core by pressing the "Remove Core" button that is revealed by clicking the dropdown arrow.  Once a Core has been unclaimed, it is available to be reassociated with any Spark users' account.
 
-![Spark Build]({{assets}}/images/ide-mem-usage.png)
+![Spark Build]({{assets}}/images/access-token.pn)
 
 - **API Key**: You can find your most recent API Key listed under the "Settings" tab in your account.  You can press the "Reset Token" button to assign a new API Key to your account.  *Note* that pressing this button will require you to update any hard-coded API Credentials in your Spark-powered projects!
 
@@ -148,7 +148,7 @@ The easiest way to generate library boilerplate code is to follow the instructio
 Checking code memory usage
 ---
 
-!["i" button]({{assets}}/images/create-account.jpg)
+!["i" button]({{assets}}/images/ide-i-button.png)
 
 Whenever you **verify** your code and it compiles successfully, an "i" button will be displayed at the console output window.
 
@@ -156,7 +156,7 @@ This allows you to view the amount of FLASH and RAM used by this particular code
 
 *If there are no code changes and you **verify** code for the second time, the "i" button will not be available. You can simply add an extra blank space or new line before you **verify** and the "i" button will now appear.
 
-![Code memory information]({{assets}}/images/create-account.jpg)
+![Code memory information]({{assets}}/images/ide-mem-usage.jpg)
 
 Wait, what is firmware?
 ---
