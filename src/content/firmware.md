@@ -447,6 +447,7 @@ Spark.sleep(SLEEP_MODE_DEEP,60);
 // The Core LED will shut off during deep sleep
 ```
 The Core will automatically *wake up* and reestablish the WiFi connection after the specified number of seconds.
+A premature wake-up can be triggered by a rising edge signal at the `A0/WKUP` pin.
 
 `Spark.sleep(uint16_t wakeUpPin, uint16_t edgeTriggerMode)` can be used to put the entire Core into a *stop* mode with *wakeup on interrupt*. In this particular mode, the Core shuts down the Wi-Fi chipset (CC3000) and puts the microcontroller in a stop mode with configurable wakeup pin and edge triggered interrupt. When the specific interrupt arrives, the Core awakens from stop mode, it will behave as if the Core is reset and run all user code from the beginning with no values being maintained in memory from before the stop mode. As such, it is recommended that stop mode be called only after all user code has completed. (Note: The new Spark Photon firmware will not reset before going into stop mode so all the application variables are preserved after waking up from this mode. The voltage regulator is put in low-power mode. This mode achieves the lowest power consumption while retaining the contents of SRAM and registers.)
 It is mandatory to update the *bootloader* (https://github.com/spark/core-firmware/tree/bootloader-patch-update) for proper functioning of this mode(valid only for Spark Core).
