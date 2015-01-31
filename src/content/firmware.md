@@ -4516,7 +4516,7 @@ Returns:
 
 ### substring()
 
-Get a substring of a String. The starting index is inclusive (the corresponding character is included in the substring), but the optional ending index is exclusive (the corresponding character is not included in the substring). If the ending index is omitted, the substring continues to the end of the String.
+Get a substring of a String. The starting index is inclusive (the corresponding character is included in the substring), but the optional ending index is exclusive (the corresponding character is not included in the substring). If the ending index is omitted, the substring continues to the end of the String. NOTE: The first charecter in the string is index zero, the second is index one and so on...
 
 ```
 SYNTAX:
