@@ -191,8 +191,21 @@ Spark.publish("lake-depth/1", "28m", 21600);
 
 ---
 
+Publish a private event with the given name.
+
+```C++
+// SYNTAX
+Spark.publish(const char *eventName, PRIVATE);
+Spark.publish(String eventName, PRIVATE);
+
+// EXAMPLE USAGE
+Spark.publish("front-door-unlocked", PRIVATE);
+```
+
+
+---
+
 Publish a private event with the given name, data, and TTL.
-In order to publish a private event, you must pass all four parameters.
 
 ```C++
 // SYNTAX
@@ -1152,7 +1165,7 @@ void loop()
 {
   Serial.write(45); // send a byte with the value 45
 
-  int bytesSent = Serial.write(“hello”); //send the string “hello” and return the length of the string.
+  int bytesSent = Serial.write(“hello�?); //send the string “hello�? and return the length of the string.
 }
 ```
 
