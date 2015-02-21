@@ -136,9 +136,9 @@ This feature allows the Core to generate an event based on a condition. For exam
 
 Spark events have the following properties:
 
-* name (1–63 ASCII characters)
+* name (1â€“63 ASCII characters)
 * public/private (default public)
-* ttl (time to live, 0–16777215 seconds, default 60)
+* ttl (time to live, 0â€“16777215 seconds, default 60)
   !! NOTE: The user-specified ttl value is not yet implemented, so changing this property will not currently have any impact.
 * optional data (up to 63 bytes)
 
@@ -511,7 +511,7 @@ Spark.sleep(D0,RISING,60);
 
 In *standard sleep mode*, the Core current consumption is in the range of: **30mA to 38mA**
 
-In *deep sleep mode*, the Core current consumption is around: **3.2 μA**
+In *deep sleep mode*, the Core current consumption is around: **3.2 Î¼A**
 
 <!--
 Spark.sleep(int millis, array peripherals);
@@ -1165,7 +1165,7 @@ void loop()
 {
   Serial.write(45); // send a byte with the value 45
 
-  int bytesSent = Serial.write(“hello�?); //send the string “hello�? and return the length of the string.
+  int bytesSent = Serial.write("hello"); //send the string "hello" and return the length of the string.
 }
 ```
 
