@@ -333,13 +333,3 @@ However, if we are *connected* and have *received a command*
 then we use the command to perform a `digitalWrite()`.
 
 [Example server and firmware on github >](https://github.com/spark/local-communication-example)
-
-texting the core
-===
-
-**coming soon!**
-
-an internet button
-===
-
-**coming soon!**
