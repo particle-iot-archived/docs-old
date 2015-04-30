@@ -166,12 +166,12 @@ Please complete the following steps:
 2. Try a factory reset.  Hold down both buttons, then release the RST button, while holding down the MODE button.  The LED should begin flashing yellow.  Continue holding down the MODE button until you see the Core change from flashing yellow to flashing white.  Then release the button.  The Core should begin [flashing blue](https://v.cdn.vine.co/r/videos/E465A8959B1015390893882101760_178fcfd2b3c.4.3.11510817618992331600_MIW9HE1mtZ9H_SpBlKdK1lv2UfmniExCFQHrgJ7iqiFDUiDb0E31bR7GwvB_7wz0.mp4?versionId=eS01KUZ6NaUZgEipSDeVi0rxZENByp1N) after the factory reset is complete.
 3. If a factory reset is unsuccessful, then we have to write the firmware over DFU.  You can accomplish this by following the steps below:
 
-Install dfu-util for your system either using homebrew on a mac, http://dfu-util.gnumonks.org/ on windows, or you can build from source on linux:
+Install dfu-util for your system either using homebrew on a mac, http://dfu-util.sourceforge.net/ on windows, or you can build from source on linux:
 
     opkg install libusb-1.0-dev
-    wget http://dfu-util.gnumonks.org/releases/dfu-util-0.7.tar.gz
-    tar xvf dfu-util-0.7.tar.gz
-    cd dfu-util-0.7
+    wget 'http://dfu-util.sourceforge.net/releases/dfu-util-0.8.tar.gz'
+    tar xvf dfu-util-0.8.tar.gz
+    cd dfu-util-0.8
     ./configure
     make
     sudo make install
