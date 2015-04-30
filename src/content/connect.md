@@ -82,10 +82,11 @@ Plug your Spark Core into your computer over USB. When the Spark Core is in [Lis
 - Parity: none
 - Stop Bits: 1
 
-Once you've opened a serial connection, you have two commands at your disposal by hitting either **w** or **i** on the keyboard. Here's what they do:
+Once you've opened a serial connection, you have three commands at your disposal by hitting either **w**, **i** or **f** on the keyboard. Here's what they do:
 
 - **w**: Set up your Wi-Fi SSID and password
 - **i**: ("i" as in identify) Read out the Spark Core ID
+- **f**: ("f" as in firmware) Firmware Upgrade using Y-Modem protocol
 
 **NOTE:** If you connect your Core over USB the first time, you will also need to manually *claim* your Core to connect it with your account. Please see the section below on [claiming your Core](/#/connect/claiming-your-core) for more details.
 
@@ -113,7 +114,7 @@ Then open up [Spark Build](https://www.spark.io/build) and click the 'Cores' ico
 APPENDIX
 ===
 
-## DFU Mode (Device Firmware Upgrade)
+## Firmware Upgrade using DFU mode
 
 If you are wish to program a Core with a custom firmware via USB, you'll need to use this mode. This mode triggers the on-board bootloader that accepts firmware binary files via the dfu-utility.
 
@@ -122,13 +123,31 @@ Procedure:
 1. Hold down BOTH buttons
 2. Release only the RST button, while holding down the MODE button.
 3. Wait for the LED to start flashing yellow
-6. Release the MODE button
+4. Release the MODE button
 
 
 The Core now is in the DFU mode.
 
 
 <iframe class="vine-embed" src="https://vine.co/v/MahhI1Fg7O6/embed/simple" width="320" height="320" frameborder="0"></iframe>
+
+## Firmware Upgrade using Serial
+
+If you are wish to program a Core with a custom firmware via USB Serial(Virtual Com Port), you'll need to use this mode. This mode triggers the Y-Modem protocol that accepts firmware binary files via any serial terminal program such as Tera Term.
+
+Procedure:
+
+1. Hold down Mode button for 3 seconds to enter [Listening Mode](/connect/#connecting-your-core-listening-mode)
+2. Open a new Serial connection using standard settings.
+3. Press **f** command to enter Firmware upgrade mode using Y-Modem protocol
+4. Select File -> Transfer -> YMODEM -> Send...
+5. Select the core-firmware.bin file to complete the Firmware Update process
+
+[Tera Term](http://en.sourceforge.jp/projects/ttssh2/releases/) for Y-Modem Firmware upgrade
+![Tera Term Serial Connection]({{assets}}/images/tera_term_serial_connection.jpg)
+![Tera Term Serial Y-Modem Init]({{assets}}/images/tera_term_serial_y_modem_init.jpg)
+![Tera Term Serial Y-Modem Send]({{assets}}/images/tera_term_serial_y_modem_send.jpg)
+![Tera Term Serial Y-Modem Firmware Update Done]({{assets}}/images/tera_term_serial_y_modem_firmware_update_done.jpg)
 
 ## Factory Reset
 
