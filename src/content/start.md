@@ -45,12 +45,12 @@ Now use the app to sign up for an account!
 Make sure your phone is connected to the WiFi you want to use (it'll show up in the SSID blank on the app), then enter your password and click CONNECT!
 
 This may take a little while- but don't worry. It should go through the following colors:
-- **Blinking blue**: Listening for Wi-Fi credentials
-- **Solid blue**:    Getting Wi-Fi info from app
-- **Blinking green**: Connecting to the Wi-Fi network
-- **Blinking cyan**: Connecting to the Spark Cloud
-- **Blinking magenta**: Updating to the newest firmware
-- **Breathing cyan**: Connected!
+1. **Blinking blue**: Listening for Wi-Fi credentials
+2. **Solid blue**:    Getting Wi-Fi info from app
+3. **Blinking green**: Connecting to the Wi-Fi network
+4. **Blinking cyan**: Connecting to the Spark Cloud
+5. **Blinking magenta**: Updating to the newest firmware
+6. **Breathing cyan**: Connected!
 
 <div id="core1" class="core"><div class="core-butt"></div><div class="rgb"><div class="pattern"></div></div></div>
 
