@@ -6,7 +6,7 @@ order: 12
 
 Troubleshooting
 ===
-
+m
 Can't get connected?
 ---
 
@@ -349,7 +349,7 @@ Note: If you can, you should use the `spark-cli` described above; it's simpler a
 To flash a Core over USB without the `spark-cli`, you'll need the `dfu-util` utility and the `deep_update_2014_06` binary.
 
 - You can install dfu-util via the instructions provided [here](https://github.com/spark/core-firmware#3-device-firmware-upgrade-utilities).
-- You can download the deep_update_2014_06 binary [here](https://github.com/spark/spark-cli/raw/master/js/binaries/deep_update_2014_06.bin).
+- You can download the deep_update_2014_06 binary [here](https://github.com/spark/spark-cli/raw/master/binaries/deep_update_2014_06.bin).
 
 To flash the deep update binary to the core, first put it into [dfu-mode](http://docs.spark.io/connect/#appendix-dfu-mode-device-firmware-upgrade):
 
