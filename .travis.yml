@@ -7,7 +7,7 @@ deploy:
   provider: s3
   access_key_id: "AKIAJ5RMM3264VMARJQQ"
   secret_access_key:
-    secure: "S+NEZ9yJpSh4p2v/Hw1Nm5bWKAy99tLNPiiIWBmFG1hWOxKRAfMN+K2oNkB2o4vQ36yNMiBM2Lp5XPG8kWBWvxoza0rQ2Sf3FMylDxRYC1OAIH4jedRQefuGr727LU6UXojjSRcLZ3PbkDDqZztnZboHEVlKVQR1ea5UgoZBP9E="
+    secure: "DoLLx5daVx4BGG60BeE1TFy0tZakIr20IQuQmqL/B9ruEORujnaELpgFlD2a5w/WwD5vi65U4tuZAv/M647vtjx65G4Xtt5hLcX1Ja32JL2Dg+5O4rrzImQM8S0z4cCRyZ7KjADaDYyubyeyOBKLB95reAi44ESgVNmbsPNF4yE="
   bucket: docs.spark.io
   skip_cleanup: true
   local-dir: build
