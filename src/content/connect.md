@@ -54,59 +54,148 @@ For more information on how the *seemingly magical* Smart Config mode works, che
 
 ## Connect over USB
 
-You can also connect the Spark Core to your Wi-Fi network over USB by communicating through Serial. *NOTE: This only works when the Spark Core is in [Listening Mode](/connect/#connecting-your-core-listening-mode) (i.e. RGB led is blinking blue)*.
+You can also connect your device to your Wi-Fi network over USB by communicating through Serial. *NOTE: This only works when the device is in [Listening Mode](./#connecting-your-core-listening-mode) (i.e. RGB led is blinking blue)*.
 
-First, you'll need to download a serial terminal application.
+There are a few ways to go about connecting your Core over USB. We find that the easiest way is to just use the Spark Command Line Interface (Spark CLI). Follow these links depending on your preferences:
 
-For __Windows__ users, we recommend [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/).
-You'll also need to install the Windows driver:
+- [Windows](./#connect-over-usb-using-windows)
+- [Mac OSX](./#connect-over-usb-using-osx)
 
-[Windows driver for Spark Core >](https://s3.amazonaws.com/spark-website/Spark.zip)
+###Using Windows
 
-[CoolTerm](http://freeware.the-meiers.org/) provides a nice GUI.
-![CoolTerm settings]({{assets}}/images/coolterm-settings.png)
-![CoolTerm setup]({{assets}}/images/coolterm-setup.png)
+We're going to install the Spark CLI on your computer. If you already have node.js installed, you can skip down a few steps.
 
-For __Mac__ users, either CoolTerm or screen work.
+####Installing Node.js
+Go to the [node.js website](https://nodejs.org/download) and download the Windows installer. Download the 32-Bit or 64-Bit .msi files, depending on your operating system.
 
-For __Linux__ command line usage, [GNU Screen](https://www.gnu.org/software/screen/) works great.
-(On OS X, the command line invocation might look something like `screen /dev/cu.usbmodem1411 9600`.
-On Ubuntu, it looks something like `screen /dev/ttyACM0 9600`. Device location may vary, poke around in the `/dev` directory if you don't find it immediately)
+**If you do not know if you are running 32-bit or 64-bit, checking is easy!**
+- __On Windows 8__ Mouse over the upper right hand corner of your screen and nagivate to Settings. Then click "PC info" to display basic information about your computer.
+- __On Windows 7__ Open System by clicking the Start button Picture of the Start button, right-clicking Computer, and then clicking Properties. Under System, you can view the system type.
 
-__How-to__
+Run the installer you downloaded. Follow the prompts. The default file locations should be fine for this.
 
-Plug your Spark Core into your computer over USB. When the Spark Core is in [Listening Mode](/connect/#connecting-your-core-listening-mode), open a serial port over USB using the standard settings, which should be:
+Restart your computer.
+__(You can do this by mousing over the upper right hand corner of the screen, then going to Settings > Power > Restart)__
 
-- Baudrate: 9600
-- Data Bits: 8
-- Parity: none
-- Stop Bits: 1
+Node should now be installed! In the next step we will test it and install the CLI.
 
-Once you've opened a serial connection, you have two commands at your disposal by hitting either **w** or **i** on the keyboard. Here's what they do:
+####Installing the Spark Drivers
+You'll also need to install the Windows driver. [Download it here.](https://s3.amazonaws.com/spark-website/Spark.zip)
 
-- **w**: Set up your Wi-Fi SSID and password
-- **i**: ("i" as in identify) Read out the Spark Core ID
+Unzip the file. It is fine to unzip this as a default into your Downloads folder.
 
-**NOTE:** If you connect your Core over USB the first time, you will also need to manually *claim* your Core to connect it with your account. Please see the section below on [claiming your Core](/#/connect/claiming-your-core) for more details.
+Go to the Device Manager and double-click on your Spark device under `Other Devices`.
 
-Claiming your Core
-===
+Click `Update Driver`, and select `Browse for driver software on your computer`.
 
-Once your Core is connected, it needs to be *claimed* in order to be associated with your account. This is what lets you control your Core and keeps anyone else from doing so.
+Navigate to your Downloads folder, or wherever you unzipped the drivers.
 
-If you use the mobile app to set up your Core, it should claim it automatically. However if you connect your Core over USB, or if the claiming process is unsuccessful, you can claim it manually.
+(Note that right now, the drivers are in a `Spark` folder and are named `spark_core`)
 
-The easiest way to manually claim a Core over USB is to use the [Spark Command Line Interface](https://github.com/spark/spark-cli). Once you have this installed, you can simply type `spark setup` and follow the instructions.
+If you have a problem installing, you may have to temporarily disable the digitally signed driver enforcement policy. (We're sorry.) There are good instrunctions on how to do that [here](http://www.howtogeek.com/167723/how-to-disable-driver-signature-verification-on-64-bit-windows-8.1-so-that-you-can-install-unsigned-drivers/).
 
-Alternatively, if you have troubles installing the command line tool, you can get the Core's ID over serial and claim it via the build site.
-You can do this by opening a Serial connection to the Core and pressing the **i** key (see the above instuctions for connecting over USB). It should show you a number like this:
+####Opening the Command Prompt
+You'll need to open the command prompt for this next part. You can also use Powershell or a similar command line tool if that is what you are used to.
 
-    # Example Core ID
-    55ff68064989495329092587
+To open the command prompt:
+1) Mouse over the upper right hand corner of the screen and select "Search"
+2) Search for `cmd` in the search box
+3) Click on Command Prompt
 
----
+Now your Command Prompt, is open for use.
 
-Then open up [Spark Build](https://www.spark.io/build) and click the 'Cores' icon. Click the button that says 'Add a Core', and enter your ID in the text box.
+####Installing the Spark CLI
+In the Command Prompt window, type:
+
+`npm install -g spark-cli`
+
+and press enter.
+
+The terminal will spit out a lot of data, in the midst of which you will see
+
+`[serialport] Success`
+
+
+Now let's try using the CLI!
+
+####Connecting Your Device
+Make sure your device is plugged in via USB and in [Listening Mode](./#connecting-your-core-listening-mode) (blinking blue). Then type:
+
+`spark setup`
+
+Log in with your [Spark Build account](http://build.spark.io) and follow the prompts to set up your device.
+
+If you have already claimed your device and you want to connect it to wifi, type `spark serial wifi` instead of `spark setup`. This will set up your device on the current wifi.
+
+**Wait! What is an SSID? What kind of security does my wifi have?**
+- __The SSID__ is the name of your network. When you connect on your computer, it is the name that you select when you connect your computer to wifi.
+- __The Security__ of your wifi is often set up by the administrator. Typically this is WPA2 if a password is needed, or unsecured if no password is needed. Contact your network administrator if you can't get this step to work, and find out exactly what kind of wifi you have.
+
+If your device is not connecting, try troubleshooting [here](http://support.spark.io/hc/en-us/articles/204357684-Can-t-Get-Connected-).
+
+More info on the CLI is available [here](http://docs.spark.io/cli/).
+
+
+###Using OSX
+
+We're going to install the Spark CLI on your computer. If you already have node.js installed, you can skip down a step.
+
+####Installing Node.js
+Go to the [node.js website](https://nodejs.org/download) and download the OSX installer.
+
+Launch the installer and follow the instructions to install node.js.
+
+Next, open your terminal, or preferred terminal program.
+
+To open the terminal, go to the spotlight search and type `Terminal`, then press enter.
+
+In the terminal, type or paste this series of commands:
+
+`mkdir ~/npm-global`
+
+`npm config set prefix '~/npm-global'`
+
+
+If you have a .profile, (or a .bash_profile) then type:
+
+`export PATH=~/npm-global/bin:$PATH`
+
+`source ~/.profile` or `source ~/.bash_profile`
+
+
+If you do not have a .profile, type:
+
+`cat >~/.profile`
+
+`export PATH=~/npm-global/bin:$PATH`
+
+
+####Install the Spark CLI
+
+Type:
+
+`npm install -g spark-cli`
+
+_Note:_ You may need to update xcode at this time.
+
+
+####Connecting Your Device
+Make sure your device is plugged in via USB and in [Listening Mode]() (blinking blue). Open the terminal and type:
+
+`spark setup`
+
+Log in with your [Spark Build account](http://build.spark.io) and follow the prompts to set up your device.
+
+If you have already claimed your device and you want to connect it to wifi, type `spark serial wifi` instead of `spark setup`. This will set up your device on the current wifi.
+
+**Wait! What is an SSID? What kind of security does my wifi have?**
+- __The SSID__ is the name of your network. When you connect on your computer, it is the name that you select when you connect your computer to wifi.
+- __The Security__ of your wifi is often set up by the administrator. Typically this is WPA2 if a password is needed, or unsecured if no password is needed. Contact your network administrator if you can't get this step to work, and find out exactly what kind of wifi you have.
+
+If your device is not connecting, try troubleshooting [here](http://support.spark.io/hc/en-us/articles/204357684-Can-t-Get-Connected-).
+
+More info on the CLI is available [here](http://docs.spark.io/cli/).
+
 
 
 
