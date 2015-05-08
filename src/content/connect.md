@@ -66,13 +66,9 @@ There are a few ways to go about connecting your Core over USB. We find that the
 We're going to install the Spark CLI on your computer. If you already have node.js installed, you can skip down a few steps.
 
 ####Installing Node.js
-Go to the [node.js website](https://nodejs.org/download) and download the Windows installer. Download the 32-Bit or 64-Bit .msi files, depending on your operating system.
+The Spark CLI is most stable on the 10.38 version of Node.js. To use the CLI, download the (10.38 version of the Windows installer)[http://nodejs.org/dist/v0.10.38/node-v0.10.38-x86.msi], the (x64 bit if you need it)[http://nodejs.org/dist/v0.10.38/x64/node-v0.10.38-x64.msi], and the (x64 files if you need those.)[http://nodejs.org/dist/v0.10.38/x64/]
 
-**If you do not know if you are running 32-bit or 64-bit, checking is easy!**
-- __On Windows 8__ Mouse over the upper right hand corner of your screen and nagivate to Settings. Then click "PC info" to display basic information about your computer.
-- __On Windows 7__ Open System by clicking the Start button Picture of the Start button, right-clicking Computer, and then clicking Properties. Under System, you can view the system type.
-
-Run the installer you downloaded. Follow the prompts. The default file locations should be fine for this.
+If you already have node installed and it is a more recent release than 10.38, you can try running the following commands anyway. We've had some success in the past with it. Although it tends to throw some intimidating looking errors, there's a good chance you might be okay as you go through the setup process.
 
 Restart your computer.
 __(You can do this by mousing over the upper right hand corner of the screen, then going to Settings > Power > Restart)__
@@ -141,7 +137,9 @@ More info on the CLI is available [here](http://docs.spark.io/cli/).
 We're going to install the Spark CLI on your computer. If you already have node.js installed, you can skip down a step.
 
 ####Installing Node.js
-Go to the [node.js website](https://nodejs.org/download) and download the OSX installer.
+The Spark CLI is most stable on the 10.38 version of Node.js. To use the CLI, download the (10.38 version of the OS X installer)[http://nodejs.org/dist/v0.10.38/node-v0.10.38.pkg].
+
+If you already have node installed and it is a more recent release than 10.38, you can try running the following commands anyway. We've had some success in the past with it. Although it tends to throw some intimidating looking errors, there's a good chance you might be okay as you go through the setup process.
 
 Launch the installer and follow the instructions to install node.js.
 
