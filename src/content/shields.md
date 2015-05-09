@@ -328,7 +328,7 @@ These are general purpose 3mm LEDs. You can never have enough of them! Use a res
 
 So, Red and Green aren't enough for you? Want to make bazzillion different colors? Then this RGB LED will do it for ya. You can mix colors by connecting each pin to an analogWrite compatible pin on the Core and feed them different values. Let the disco party begin!
 
-This LED has four pins, one for each color and a common anode (+) pin.
+This LED has four pins, one for each color and a common anode (-) pin. The common anode pin goes to power.
 
 [Datasheet >]({{assets}}/datasheets/makerkit/rgb-led.pdf)
 
