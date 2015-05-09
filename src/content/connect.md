@@ -66,7 +66,7 @@ There are a few ways to go about connecting your Core over USB. We find that the
 We're going to install the Spark CLI on your computer. If you already have node.js installed, you can skip down a few steps.
 
 ####Installing Node.js
-The Spark CLI is most stable on the 10.38 version of Node.js. To use the CLI, download the (10.38 version of the Windows installer)[http://nodejs.org/dist/v0.10.38/node-v0.10.38-x86.msi], the (x64 bit if you need it)[http://nodejs.org/dist/v0.10.38/x64/node-v0.10.38-x64.msi], and the (x64 files if you need those.)[http://nodejs.org/dist/v0.10.38/x64/]
+The Spark CLI is most stable on the 10.38 version of Node.js. To use the CLI, download the [10.38 version of the Windows installer](http://nodejs.org/dist/v0.10.38/node-v0.10.38-x86.msi), the [x64 bit if you need it](http://nodejs.org/dist/v0.10.38/x64/node-v0.10.38-x64.msi), and the [x64 files if you need those.](http://nodejs.org/dist/v0.10.38/x64/)
 
 If you already have node installed and it is a more recent release than 10.38, you can try running the following commands anyway. We've had some success in the past with it. Although it tends to throw some intimidating looking errors, there's a good chance you might be okay as you go through the setup process.
 
@@ -137,7 +137,7 @@ More info on the CLI is available [here](http://docs.spark.io/cli/).
 We're going to install the Spark CLI on your computer. If you already have node.js installed, you can skip down a step.
 
 ####Installing Node.js
-The Spark CLI is most stable on the 10.38 version of Node.js. To use the CLI, download the (10.38 version of the OS X installer)[http://nodejs.org/dist/v0.10.38/node-v0.10.38.pkg].
+The Spark CLI is most stable on the 10.38 version of Node.js. To use the CLI, download the [10.38 version of the OS X installer](http://nodejs.org/dist/v0.10.38/node-v0.10.38.pkg).
 
 If you already have node installed and it is a more recent release than 10.38, you can try running the following commands anyway. We've had some success in the past with it. Although it tends to throw some intimidating looking errors, there's a good chance you might be okay as you go through the setup process.
 
