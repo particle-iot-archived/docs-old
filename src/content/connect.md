@@ -160,13 +160,26 @@ If you have a .profile, (or a .bash_profile) then type:
 
 `source ~/.profile` or `source ~/.bash_profile`
 
+and add `export PATH=~/npm-global/bin:$PATH` to your `.profile`. You can do this by several methods, one simple way is to type:
+
+```
+cat >> ~/.profile
+
+export PATH=~/npm-global/bin:$PATH
+
+```
+and then type ctrl-c to exit.
+
 
 If you do not have a .profile, type:
 
 `cat >~/.profile`
 
+You will reach a prompt in which you can paste:
+
 `export PATH=~/npm-global/bin:$PATH`
 
+add a line return and press ctrl-c to exit.
 
 ####Install the Spark CLI
 
