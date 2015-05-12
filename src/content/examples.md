@@ -22,6 +22,8 @@ Connect everything together as shown in the picture. The negative (shorter) pin 
 
 ![One LED setup]({{assets}}/images/breadboard-one-led.jpg)
 
+Note: please note that the connection on this picture is not correct. The connection on the GND and the D0 is inverted.
+
 But wait, what's the value of the resistor again?
 
 *Here's how we find that out:*
