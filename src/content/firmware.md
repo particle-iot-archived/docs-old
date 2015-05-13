@@ -1008,7 +1008,7 @@ void setup()
   // On Windows it will be necessary to implement the following line:
   // Make sure your Serial Terminal app is closed before powering your Core
   // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
+  while(!Serial.available()) Spark.process();
 
   Serial1.begin(9600);  // open serial over TX and RX pins
 
@@ -1182,7 +1182,7 @@ void setup()
   // Make sure your Serial Terminal app is closed before powering your Core
   Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
+  while(!Serial.available()) Spark.process();
 }
 
 void loop() {
@@ -1644,7 +1644,7 @@ void setup()
   // Make sure your Serial Terminal app is closed before powering your Core
   Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
+  while(!Serial.available()) Spark.process();
 
   Serial.println(WiFi.localIP());
   Serial.println(WiFi.subnetMask());
@@ -1755,7 +1755,7 @@ void setup()
   // Make sure your Serial Terminal app is closed before powering your Core
   Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
+  while(!Serial.available()) Spark.process();
 
   Serial.println("connecting...");
 
