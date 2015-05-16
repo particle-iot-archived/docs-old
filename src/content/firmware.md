@@ -136,9 +136,9 @@ This feature allows the Core to generate an event based on a condition. For exam
 
 Spark events have the following properties:
 
-* name (1–63 ASCII characters)
+* name (1-63 ASCII characters)
 * public/private (default public)
-* ttl (time to live, 0–16777215 seconds, default 60)
+* ttl (time to live, 0-16777215 seconds, default 60)
   !! NOTE: The user-specified ttl value is not yet implemented, so changing this property will not currently have any impact.
 * optional data (up to 63 bytes)
 
@@ -193,8 +193,21 @@ Spark.publish("lake-depth/1", "28m", 21600);
 
 ---
 
+Publish a private event with the given name.
+
+```C++
+// SYNTAX
+Spark.publish(const char *eventName, PRIVATE);
+Spark.publish(String eventName, PRIVATE);
+
+// EXAMPLE USAGE
+Spark.publish("front-door-unlocked", PRIVATE);
+```
+
+
+---
+
 Publish a private event with the given name, data, and TTL.
-In order to publish a private event, you must pass all four parameters.
 
 ```C++
 // SYNTAX
@@ -1100,7 +1113,7 @@ void loop()
 {
   Serial.write(45); // send a byte with the value 45
 
-  int bytesSent = Serial.write(“hello”); //send the string “hello” and return the length of the string.
+  int bytesSent = Serial.write("hello"); //send the string "hello" and return the length of the string.
 }
 ```
 
