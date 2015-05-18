@@ -678,6 +678,55 @@ void loop()
 }
 ```
 
+### getPinMode()
+
+Used to get the `PinMode` of a specified pin.
+
+```C++
+// SYNTAX
+PinMode myPin = getPinMode(pin);
+```
+
+`getPinMode()` takes one argument, `pin`: the number of the pin whose mode you wish to get.
+
+`getPinMode()` returns one of the following of type `PinMode`:
+
+- OUTPUT = 0
+- INPUT = 1
+- INPUT_PULLUP = 2
+- INPUT_PULLDOWN = 3
+- AF_OUTPUT_PUSHPULL = 4
+- AF_OUTPUT_DRAIN = 5
+- AN_INPUT = 6
+- PIN_MODE_NONE = 255
+
+```C++
+// EXAMPLE USAGE
+PinMode myPin;
+
+void setup()
+{
+  // Make sure your Serial Terminal app is closed before powering your Core
+  Serial.begin(9600);
+  // Now open your Serial Terminal, and hit any key to continue!
+  while(!Serial.available()) SPARK_WLAN_Loop();
+
+  pinMode(D7, OUTPUT); // sets pin as output
+}
+
+void loop()
+{
+  myPin = getPinMode(D7);
+  if (myPin != INPUT) {
+    Serial.println("D7 is not an INPUT!");
+  }
+  if (myPin == OUTPUT) {
+    Serial.println("D7 is an OUTPUT.");
+  }
+  delay(1000);
+}
+```
+
 I/O
 ------
 
