@@ -162,10 +162,10 @@ Creating the webhook
 
 ```sh
 # creating a GET hook with the Spark-CLI
-# spark webhook GET <your_event_name> http://<website.you.are.trying.to.contact>
+# spark webhook create GET <your_event_name> http://<website.you.are.trying.to.contact>
 
 # create a webhook to send a "GET" request to our weather URL when we publish "get_weather"
-spark webhook GET get_weather http://w1.weather.gov/xml/current_obs/KMSP.xml
+spark webhook create GET get_weather http://w1.weather.gov/xml/current_obs/KMSP.xml
 > ...
 > Successfully created webhook!
 ```
