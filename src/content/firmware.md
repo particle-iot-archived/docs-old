@@ -7,6 +7,13 @@ order: 3
 Spark Core Firmware
 ==========
 
+System Functions
+=====
+
+### System.reset()
+
+The way to restart (warm boot) the Core from user code.
+
 Cloud Functions
 =====
 
