@@ -787,6 +787,7 @@ void loop()
 ### analogRead()
 
 Reads the value from the specified analog pin. The Spark Core has 8 channels (A0 to A7) with a 12-bit resolution. This means that it will map input voltages between 0 and 3.3 volts into integer values between 0 and 4095. This yields a resolution between readings of: 3.3 volts / 4096 units or, 0.0008 volts (0.8 mV) per unit.
+Calling analogRead() function disconnect internal pullup\down resistor (INPUT_PULLUP or INPUT_PULLDOWN argument in set pinMode)
 
 ```C++
 // SYNTAX
