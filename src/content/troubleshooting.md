@@ -230,7 +230,7 @@ Please make sure the following software is installed:
 
 * [Spark-CLI](http://docs.spark.io/cli/)
 * [DFU-util (windows)](https://community.spark.io/t/tutorial-installing-dfu-driver-on-windows/3518)
-* [DFU-util (mac)](https://github.com/spark/firmware#3-device-firmware-upgrade-utilities)
+* [DFU-util (mac)](https://github.com/particle-iot/firmware#3-device-firmware-upgrade-utilities)
 
 Please complete the following steps:
 
@@ -323,7 +323,7 @@ If you're on a noisy WiFi network you've had troubles flashing wirelessly in the
 
 ### Flash via Spark CLI
 
-The [Spark-CLI](https://github.com/spark/spark-cli) is a swiss army command line knife that can be used to do all kinds of cool things...like flash a deep update to your core. The README provides some nice documentation about how to install it and [how to do a deep update over USB](https://github.com/spark/spark-cli#performing-a-deep-update).  The process is pretty simple:
+The [Spark-CLI](https://github.com/particle-iot/spark-cli) is a swiss army command line knife that can be used to do all kinds of cool things...like flash a deep update to your core. The README provides some nice documentation about how to install it and [how to do a deep update over USB](https://github.com/particle-iot/spark-cli#performing-a-deep-update).  The process is pretty simple:
 
 Install or Upgrade the CLI (requires Node.js):
 
@@ -348,8 +348,8 @@ Note: If you can, you should use the `spark-cli` described above; it's simpler a
 
 To flash a Core over USB without the `spark-cli`, you'll need the `dfu-util` utility and the `deep_update_2014_06` binary.
 
-- You can install dfu-util via the instructions provided [here](https://github.com/spark/core-firmware#3-device-firmware-upgrade-utilities).
-- You can download the deep_update_2014_06 binary [here](https://github.com/spark/spark-cli/raw/master/binaries/deep_update_2014_06.bin).
+- You can install dfu-util via the instructions provided [here](https://github.com/particle-iot/core-firmware#3-device-firmware-upgrade-utilities).
+- You can download the deep_update_2014_06 binary [here](https://github.com/particle-iot/spark-cli/raw/master/binaries/deep_update_2014_06.bin).
 
 To flash the deep update binary to the core, first put it into [dfu-mode](http://docs.spark.io/connect/#appendix-dfu-mode-device-firmware-upgrade):
 

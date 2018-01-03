@@ -31,7 +31,7 @@ Logging In
 ---
 If you want to work on more advanced projects, Spark Dev could be the choice for you. Head over and download latest release:
 
-[Spark Dev Download >](https://github.com/spark/spark-dev/releases/latest)
+[Spark Dev Download >](https://github.com/particle-iot/spark-dev/releases/latest)
 
 ![IDE Window]({{assets}}/images/ide-window.jpg)
 

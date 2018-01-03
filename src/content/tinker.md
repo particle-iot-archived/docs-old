@@ -35,7 +35,7 @@ To reflash Tinker from within the app:
 - **iOS Users**: Tap the list button at the top left. Then tap the arrow next to your desired Core and tap the "Re-flash Tinker" button in the pop out menu.
 - **Android Users**: With your desired Core selected, tap the options button in the upper right and tap the "Reflash Tinker" option in the drop down menu.
 
-The Tinker app is a great example of how to build a very powerful application with not all that much code. You can have a look at the latest release [here.](https://github.com/spark/core-firmware/blob/master/src/application.cpp)
+The Tinker app is a great example of how to build a very powerful application with not all that much code. You can have a look at the latest release [here.](https://github.com/particle-iot/core-firmware/blob/master/src/application.cpp)
 
 Using Tinker with Your Code
 ---

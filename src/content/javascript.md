@@ -71,7 +71,7 @@ Call `sparkLogin` function with a callback function that will be called on succe
 </script>
 ```
 
-Check out a [complete example here](https://github.com/spark/sparkjs/blob/master/examples/client)
+Check out a [complete example here](https://github.com/particle-iot/sparkjs/blob/master/examples/client)
 
 ##### Customize styles
 
@@ -177,7 +177,7 @@ spark.on('login', function() {
 spark.login({username: 'email@example.com', password: 'password'});
 ```
 
-Check the examples repository [here](https://github.com/spark/sparkjs/tree/master/examples)
+Check the examples repository [here](https://github.com/particle-iot/sparkjs/tree/master/examples)
 for complete implementation
 
 ## Device management
@@ -622,7 +622,7 @@ spark.removeAccessToken('u@m.com', 'pass', 'token', callback);
 
 ## Examples
 
-Check the examples repository [here](https://github.com/spark/sparkjs/tree/master/examples)
+Check the examples repository [here](https://github.com/particle-iot/sparkjs/tree/master/examples)
 
 ## Setup your dev environment
 

@@ -64,7 +64,7 @@ A2        A6           PWM*, ADC**
 
 **IMPORTANT**: The Shield Shield does *not* map the Spark Core pins to like-numbered pins on the Arduino. In other words, D0 on the Spark Core is **not** the same as D0 on the Arduino. Please review the pin mapping table to the right and plan accordingly.
 
-[Shield Shield Hardware files >](https://github.com/spark/shields/tree/master/Shield%20Shield)
+[Shield Shield Hardware files >](https://github.com/particle-iot/shields/tree/master/Shield%20Shield)
 
 
 Relay Shield
@@ -168,7 +168,7 @@ curl https://api.spark.io/v1/devices/0123456789abcdef/relay \
 
 **USE EXTREME CAUTION WHEN DEALING WITH HIGH VOLTAGE !!**
 
-[Relay Shield Hardware Files >](https://github.com/spark/shields/tree/master/Relay%20Shield)
+[Relay Shield Hardware Files >](https://github.com/particle-iot/shields/tree/master/Relay%20Shield)
 
 <!-- TO DO
 Project Ideas
@@ -203,7 +203,7 @@ If you are using the STLink V2, you can download the supporting drivers and util
 
 All of the hardware files for the JTAG shield are available for download.
 
-[JTAG Shield Hardware Files >](https://github.com/spark/shields/tree/master/Programmer%20Shield)
+[JTAG Shield Hardware Files >](https://github.com/particle-iot/shields/tree/master/Programmer%20Shield)
 
 
 Battery Shield
@@ -234,7 +234,7 @@ Specifications
 - Simultaneously charge the battery and power the core
 - Dimensions: 2.3 x 0.61
 - Weight: 20g
-- Datasheet: [MCP73871](https://github.com/spark/shields/blob/master/Battery%20Shield/battery-shield-smallinductor/Datasheets/MCP73871.pdf) and [TPS61200](https://github.com/spark/shields/blob/master/Battery%20Shield/battery-shield-smallinductor/Datasheets/tps61200.pdf)
+- Datasheet: [MCP73871](https://github.com/particle-iot/shields/blob/master/Battery%20Shield/battery-shield-smallinductor/Datasheets/MCP73871.pdf) and [TPS61200](https://github.com/particle-iot/shields/blob/master/Battery%20Shield/battery-shield-smallinductor/Datasheets/tps61200.pdf)
 
 
 Setting up the shield
@@ -268,7 +268,7 @@ When powering the Core via the battery alone, the blue LED will NOT light up.
 
 **CAUTION:** Check the battery polarity and its voltage rating
 
-[Battery Shield Hardware Files >](https://github.com/spark/shields/tree/master/Battery%20Shield)
+[Battery Shield Hardware Files >](https://github.com/particle-iot/shields/tree/master/Battery%20Shield)
 
 # Spark Maker Kit
 

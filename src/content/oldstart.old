@@ -45,7 +45,7 @@ The iOS app requires iOS 7, and the Android app works with Ice Cream Sandwich (A
 [Download the Android app >](https://play.google.com/store/apps/details?id=io.spark.core.android)
 
 **At a conference?** Setup your Core with the
-[Spark CLI](https://github.com/spark/spark-cli#spark-cli)
+[Spark CLI](https://github.com/particle-iot/spark-cli#spark-cli)
 instead.
 
 
@@ -227,7 +227,7 @@ The Tinker firmware is the default application program stored in the Spark Core 
 - **iOS Users**: Tap the list button at the top left. Then tap the arrow next to your desired Core and tap the "Re-flash Tinker" button in the pop out menu.
 - **Android Users**: With your desired Core selected, tap the options button in the upper right and tap the "Reflash Tinker" option in the drop down menu.
 
-The Tinker app is a great example of how to build a very powerful application with not all that much code. You can have a look at the latest release [here.](https://github.com/spark/core-firmware/blob/master/src/application.cpp)
+The Tinker app is a great example of how to build a very powerful application with not all that much code. You can have a look at the latest release [here.](https://github.com/particle-iot/core-firmware/blob/master/src/application.cpp)
 
 The Tinker API
 ---
@@ -444,13 +444,13 @@ Adding a library to the IDE starts by creating an open source GitHub repository 
 At minimum, this repository needs a `spark.json` file, some documentation, some example firmware files, and some Arduino/C++ files.
 The import and validation process is designed to be forgiving and easy to interpret, so don't be scared; the IDE will walk you through what is required to get your library set to go.
 
-The easiest way to generate library boilerplate code is to follow the instructions on the [getting started section](https://github.com/spark/uber-library-example/#getting-started) of the `uber-library-example`, a project designed to illustrate and document what a library is supposed to look like.
+The easiest way to generate library boilerplate code is to follow the instructions on the [getting started section](https://github.com/particle-iot/uber-library-example/#getting-started) of the `uber-library-example`, a project designed to illustrate and document what a library is supposed to look like.
 
 The Spark Command Line
 ===
 
 The Spark command line tool provides a rich set of functionality ranging from initial account creation, verifying and flashing firmware via the Spark Cloud, and
-interacting with deployed cores.  You can find more details about how to get it installed and all of the cool things you can do with it [here on GitHub](https://github.com/spark/spark-cli).
+interacting with deployed cores.  You can find more details about how to get it installed and all of the cool things you can do with it [here on GitHub](https://github.com/particle-iot/spark-cli).
 
 Deploying a Spark web app
 ===

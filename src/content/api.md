@@ -583,7 +583,7 @@ curl https://api.spark.io/v1/devices/events \
 "data", "private", and "ttl" are all optional.  You can also send these with the Spark CLI:
 
 ```
-# grab the spark-cli here - https://github.com/spark/spark-cli
+# grab the spark-cli here - https://github.com/particle-iot/spark-cli
 spark publish test "Hello World"
 ```
 

@@ -427,7 +427,7 @@ You must have firmware on your Spark device, but nothing else is necessary. Basi
 
   - I don't see my function in the list on IFTTT?
 
-  Make sure you flashed your firmware to your device with the function you've exposed, and try refreshing the IFTTT page.  You can confirm what functions are available using [Spark Dev](http://docs.spark.io/dev/) and clicking the 'Cloud variables and functions' menu or in the [Spark-CLI]( https://github.com/spark/spark-cli) by running `spark list`
+  Make sure you flashed your firmware to your device with the function you've exposed, and try refreshing the IFTTT page.  You can confirm what functions are available using [Spark Dev](http://docs.spark.io/dev/) and clicking the 'Cloud variables and functions' menu or in the [Spark-CLI]( https://github.com/particle-iot/spark-cli) by running `spark list`
 
   - Why can I log in on spark.io/build, but I can't log in on IFTTT?
 
